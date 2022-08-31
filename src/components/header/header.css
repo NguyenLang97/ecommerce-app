@@ -1,3 +1,19 @@
+.cart__icon-title {
+    font-weight: 500;
+}
+.navbar-tool-item {
+    position: relative;
+    top: -8px;
+    right: 0;
+    font-weight: 500;
+}
+
+.navbar-tool-item--logined {
+    position: relative;
+    top: 0px;
+    right: 0;
+}
+
 .header {
     width: 100%;
     height: 100px;
@@ -14,9 +30,12 @@
 .user__action {
     display: none;
     right: 0px;
-    top: 86px;
+    top: 76px;
     min-width: 160px;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+.user__action--logined {
+    top: 90px;
 }
 
 .user__action::before {
@@ -24,11 +43,11 @@
     display: block;
     position: absolute;
     /* background: #000; */
-    width: 100px;
-    height: 36px;
+    width: 90px;
+    height: 50px;
     right: 0px;
-    top: -30px;
-    min-width: 160px;
+    top: -40px;
+    min-width: 170px;
 }
 
 .user__action-title {

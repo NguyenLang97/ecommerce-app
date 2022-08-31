@@ -36,7 +36,18 @@ const Routers = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/account" element={<AccountPage />} />
+            <Route
+                path="/account"
+                element={
+                    <RequireAuth>
+                        <AccountPage />
+                    </RequireAuth>
+                }
+            >
+                <Route path="orders" element={<AccountPage />} />
+                <Route path="address" element={<AccountPage />} />
+                <Route path="notifications" element={<AccountPage />} />
+            </Route>
         </Routes>
     )
 }

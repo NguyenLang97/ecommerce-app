@@ -71,31 +71,47 @@ const Header = () => {
                                 <i className="cart__icon-icon ri-shopping-cart-2-line"></i>
                                 <span className="cart__badge">{totalQuantity}</span>
                             </div>
-                            <span className="title cursor-pointer">Giỏ hàng</span>
+                            <span className="cart__icon-title cursor-pointer">Giỏ hàng</span>
                         </span>
                         <div className="nav__user-wrap position-relative">
                             <Link to={isAuth ? '/account' : '/login'} className="nav__user ">
                                 {!isAuth ? (
-                                    <div className="d-flex flex-column align-items-center justify-content-center navbar-tool-item p-l-0">
+                                    <div className="navbar-tool-item d-flex flex-row align-items-center justify-content-center  ">
                                         {/* <UserOutlined className="icon m-r-12" /> */}
                                         <img src={defaultAvt} className="defaultAvt" />
-                                        <span className="title">Đăng nhập</span>
+                                        <div className="d-flex flex-column">
+                                            <span className="title">Đăng nhập</span>
+                                            <span className="title">Đăng ký</span>
+                                        </div>
                                     </div>
                                 ) : (
-                                    <div className="d-flex flex-column navbar-tool-item p-l-0">
+                                    <div className="navbar-tool-item navbar-tool-item--logined d-flex flex-column  p-l-0">
                                         <img src={img} size={20} className="defaultAvt" />
                                         <span className="title">{username}</span>
                                     </div>
                                 )}
                             </Link>
-                            <div className="user__action flex-column position-absolute bg-white">
-                                <Link to="/account">
-                                    <p className="user__action-title">Quản lý tài khoản</p>
-                                </Link>
-                                <p className="user__action-title" onClick={() => dispatch(logoutStart())}>
-                                    Đăng xuất
-                                </p>
-                            </div>
+                            {!isAuth ? (
+                                <div className="user__action  flex-column position-absolute bg-white">
+                                    <Link to="/register">
+                                        <p className="user__action-title">Đăng ký</p>
+                                    </Link>
+                                    <Link to="/login">
+                                        <p className="user__action-title" onClick={() => dispatch(logoutStart())}>
+                                            Đăng nhập
+                                        </p>
+                                    </Link>
+                                </div>
+                            ) : (
+                                <div className="user__action user__action--logined flex-column position-absolute bg-white">
+                                    <Link to="/account">
+                                        <p className="user__action-title">Quản lý tài khoản</p>
+                                    </Link>
+                                    <p className="user__action-title" onClick={() => dispatch(logoutStart())}>
+                                        Đăng xuất
+                                    </p>
+                                </div>
+                            )}
                         </div>
                         {/* mobile menu */}
                         <span className="mobile__menu" onClick={toggleMenu}>

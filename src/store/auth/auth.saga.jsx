@@ -5,14 +5,14 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { auth, db } from '../../firebase/firebase_config'
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 
-async function registerUser({ email, password, firstName, lastName }) {
+async function registerUser({ email, password, username, fullname }) {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password)
         await setDoc(doc(db, 'users', res.user.uid), {
             email,
             password,
-            firstName,
-            lastName,
+            fullname,
+            username,
             timestamp: serverTimestamp(),
         })
         return res
@@ -57,12 +57,12 @@ function logoutUser() {
         })
 }
 
-function* authenticate({ email, password, isRegister, firstName, lastName }) {
+function* authenticate({ email, password, isRegister, fullname, username }) {
     let data
     try {
         if (isRegister) {
             console.log('isRegister :', isRegister)
-            data = yield call(registerUser, { email, password, firstName, lastName })
+            data = yield call(registerUser, { email, password, fullname, username })
             console.log('data register :', data.user.uid)
         } else {
             data = yield call(loginUser, { email, password })
@@ -87,7 +87,7 @@ function* logout() {
 function* authFlow() {
     while (true) {
         const { payload } = yield take(AUTH_START)
-        console.log('isRegister :: ', payload.isRegister)
+        console.log('isRegister :: ', payload)
         const uid = yield call(authenticate, payload)
         console.log('uid :', uid)
         if (uid) {
@@ -96,11 +96,11 @@ function* authFlow() {
         }
     }
 }
-function* authLogout (){
-    yield takeEvery(LOGOUT_START ,logout)
+function* authLogout() {
+    yield takeEvery(LOGOUT_START, logout)
 }
 function* Saga() {
-    yield all([authFlow(),authLogout()])
+    yield all([authFlow(), authLogout()])
 }
 
 export default Saga

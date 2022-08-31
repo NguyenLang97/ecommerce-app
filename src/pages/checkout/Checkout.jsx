@@ -19,7 +19,7 @@ const Checkout = () => {
     const phone = useSelector((state) => state.AuthReducer.infoUser.phone)
     const fullname = useSelector((state) => state.AuthReducer.infoUser.fullname)
     const email = useSelector((state) => state.AuthReducer.infoUser.email)
-    const userId = useSelector((state) => state.AuthReducer.currentUser.userId)
+    const userId = useSelector((state) => state.AuthReducer.currentUser)
 
     const [enterFullName, setEnterFullName] = useState(fullname)
     const [enterEmail, setEnterEmail] = useState(email)

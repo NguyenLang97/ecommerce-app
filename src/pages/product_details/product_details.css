@@ -28,7 +28,7 @@
     border-radius: 5px;
 }
 
-.tabs {
+.tabs:first-child {
     border-bottom: 1px solid #fde4e4;
 }
 

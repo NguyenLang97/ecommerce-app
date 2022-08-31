@@ -18,8 +18,9 @@ const Login = () => {
         e.preventDefault()
         const email = loginEmailRef.current.value
         const password = loginPasswordRef.current.value
+        const isRegister = false
 
-        dispatch(authStart({ email, password }))
+        dispatch(authStart({ email, password, isRegister }))
         navigate('/home')
     }
 
