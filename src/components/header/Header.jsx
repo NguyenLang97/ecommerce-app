@@ -85,8 +85,8 @@ const Header = () => {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="navbar-tool-item navbar-tool-item--logined d-flex flex-column  p-l-0">
-                                        <img src={img} size={20} className="defaultAvt" />
+                                    <div className="navbar-tool-item navbar-tool-item--logined d-flex flex-column align-items-center p-l-0">
+                                        <img src={img || defaultAvt} size={20} className="defaultAvt" />
                                         <span className="title">{username}</span>
                                     </div>
                                 )}

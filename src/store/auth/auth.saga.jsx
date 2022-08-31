@@ -5,9 +5,12 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { auth, db } from '../../firebase/firebase_config'
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 
-async function registerUser({ email, password, username, fullname }) {
+const registerUser = async ({ email, password, username, fullname }) => {
+    console.log('email, password', email)
+    console.log('email, password', password)
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password)
+        console.log('res', res)
         await setDoc(doc(db, 'users', res.user.uid), {
             email,
             password,
@@ -15,7 +18,10 @@ async function registerUser({ email, password, username, fullname }) {
             username,
             timestamp: serverTimestamp(),
         })
-        return res
+        return {
+            userID: null,
+            user: null,
+        }
     } catch (error) {
         console.log('error is :', error.message)
     }
@@ -29,7 +35,7 @@ function loginUser({ email, password }) {
                 // const userToken = await userCredential.user.getIdToken()
 
                 const userID = userCredential.user.uid
-                console.log('useid', userID)
+                console.log('userid', userID)
                 const docRef = doc(db, 'users', userID)
                 const docSnap = await getDoc(docRef)
                 console.log('logged')
@@ -63,13 +69,13 @@ function* authenticate({ email, password, isRegister, fullname, username }) {
         if (isRegister) {
             console.log('isRegister :', isRegister)
             data = yield call(registerUser, { email, password, fullname, username })
-            console.log('data register :', data.user.uid)
+            console.log('data register :', data)
         } else {
             data = yield call(loginUser, { email, password })
             console.log('data login123 :', data)
         }
         yield put(authSuccess(data))
-        return data.userID
+        return data
     } catch (error) {
         yield put(authFail(error.message))
         console.log('error.message', error.message)

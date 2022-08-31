@@ -8,7 +8,7 @@ import { authStart } from '../../store/auth/auth.action'
 
 const Register = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate
+    const navigate = useNavigate()
     const signupFullNameRef = useRef()
     const signupUserNameRef = useRef()
     const signupEmailRef = useRef()
@@ -17,8 +17,8 @@ const Register = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         const fullname = signupFullNameRef.current.value
-        const username = signupEmailRef.current.value
-        const email = signupUserNameRef.current.value
+        const email = signupEmailRef.current.value
+        const username = signupUserNameRef.current.value
         const password = signupPasswordRef.current.value
         const isRegister = true
         console.log({ email, password, isRegister, fullname, username })
