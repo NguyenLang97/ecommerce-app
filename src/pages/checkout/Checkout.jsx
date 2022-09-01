@@ -8,6 +8,7 @@ import { db } from '../../firebase/firebase_config'
 
 import './checkout.css'
 import CartTable from '../cart_page/cartTable/CartTable'
+import SuccessfulTransaction from '../../components/successful_transaction/SuccessfulTransaction'
 
 const Checkout = () => {
     const cartItems = useSelector((state) => state.CartReducer.cartItems)
@@ -25,13 +26,16 @@ const Checkout = () => {
     const [enterEmail, setEnterEmail] = useState(email)
     const [enterPhone, setEnterPhone] = useState(phone)
     const [enterAddress, setEnterAddress] = useState(address)
+    const [isOrderSuccess, setIsOrderSuccess] = useState(false)
 
     const cartTotalAmount = useSelector((state) => state.CartReducer.totalAmount)
     const shippingCost = 30
+    const Sale = 0
 
-    const totalAmountOrder = cartTotalAmount + Number(shippingCost)
+    const totalAmountOrder = cartTotalAmount + Number(shippingCost) + Number(Sale)
 
     const submitHandler = async (e) => {
+        // setIsOrderSuccess(true)
         e.preventDefault()
         const userShippingAddress = {
             name: enterFullName,
@@ -56,90 +60,107 @@ const Checkout = () => {
             console.log(err)
             // setError(true)
         }
+
+        setTimeout(() => {
+            setIsOrderSuccess(true)
+        }, 1000)
+        localStorage.setItem('cart', JSON.stringify([]))
+        localStorage.setItem('totalQuantity', JSON.stringify(0))
+        localStorage.setItem('totalAmount', JSON.stringify(0))
     }
+    console.log({ isOrderSuccess })
 
     return (
-        <Helmet title="Checkout">
-            <CommonSection title="Checkout" />
-            <selection>
-                <Container>
-                    <Row>
-                        <Col lg="12">
-                            <CartTable />
-                        </Col>
-                    </Row>
-                </Container>
-            </selection>
-            <section>
-                <Container>
-                    <Row>
-                        <Col lg="8" md="6">
-                            <h6 className="mb-4">Thông tin giao hàng</h6>
-                            <form className="checkout__form" onSubmit={submitHandler}>
-                                <div className="form__group">
-                                    <label htmlFor="">Tên người nhận</label>
-                                    <input type="text" placeholder="Enter your name" required value={enterFullName} onChange={(e) => setEnterFullName(e.target.value)} />
-                                </div>
+        <>
+            {isOrderSuccess ? (
+                <SuccessfulTransaction />
+            ) : (
+                <Helmet title="Checkout">
+                    <CommonSection title="Checkout" />
+                    <selection>
+                        <Container>
+                            <Row>
+                                <Col lg="12">
+                                    <CartTable />
+                                </Col>
+                            </Row>
+                        </Container>
+                    </selection>
+                    <section>
+                        <Container>
+                            <Row>
+                                <Col lg="8" md="6">
+                                    <h6 className="mb-4">Thông tin giao hàng</h6>
+                                    <form className="checkout__form" onSubmit={() => submitHandler()}>
+                                        <div className="form__group">
+                                            <label htmlFor="">Tên người nhận</label>
+                                            <input type="text" placeholder="Enter your name" required value={enterFullName} onChange={(e) => setEnterFullName(e.target.value)} />
+                                        </div>
 
-                                <div className="form__group">
-                                    <label htmlFor="">Email</label>
+                                        <div className="form__group">
+                                            <label htmlFor="">Email</label>
 
-                                    <input type="email" placeholder="Enter your email" value={enterEmail} required onChange={(e) => setEnterEmail(e.target.value)} />
-                                </div>
-                                <div className="form__group">
-                                    <label htmlFor="">Số điện thoại</label>
+                                            <input type="email" placeholder="Enter your email" value={enterEmail} required onChange={(e) => setEnterEmail(e.target.value)} />
+                                        </div>
+                                        <div className="form__group">
+                                            <label htmlFor="">Số điện thoại</label>
 
-                                    <input type="number" placeholder="Phone number" value={enterPhone} required onChange={(e) => setEnterPhone(e.target.value)} />
-                                </div>
-                                <div className="form__group">
-                                    <label htmlFor="">Địa chỉ nhận hàng</label>
+                                            <input type="number" placeholder="Phone number" value={enterPhone} required onChange={(e) => setEnterPhone(e.target.value)} />
+                                        </div>
+                                        <div className="form__group">
+                                            <label htmlFor="">Địa chỉ nhận hàng</label>
 
-                                    <input type="text" placeholder="Country" value={enterAddress} required onChange={(e) => setEnterAddress(e.target.value)} />
-                                </div>
-                                <div className="p-12 bg-white bor-rad-8 m-tb-16">
-                                    <h2 className="m-b-8">Phương thức thanh toán</h2>
-                                    <p>Thông tin thanh toán của bạn sẽ luôn được bảo mật</p>
-                                    <Row gutter={[16, 16]}>
-                                        <Col span={24} md={12}>
-                                            <div className="p-tb-8 p-lr-16 bg-gray item-active">
-                                                <b className="font-size-16px">Thanh toán khi nhận hàng</b>
-                                                <p>Thanh toán bằng tiền mặt khi nhận hàng tại nhà hoặc showroom.</p>
-                                            </div>
-                                        </Col>
-                                        <Col span={24} md={12}>
-                                            <div className="p-tb-8 p-lr-16 bg-gray">
-                                                <b className="font-size-16px">Thanh toán Online qua cổng VNPAY</b>
-                                                <p>Thanh toán qua Internet Banking, Visa, Master, JCB, VNPAY-QR.</p>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
+                                            <input type="text" placeholder="Country" value={enterAddress} required onChange={(e) => setEnterAddress(e.target.value)} />
+                                        </div>
+                                        <div className="p-12 bg-white bor-rad-8 m-tb-16">
+                                            <h2 className="m-b-8">Phương thức thanh toán</h2>
+                                            <p>Thông tin thanh toán của bạn sẽ luôn được bảo mật</p>
+                                            <Row gutter={[16, 16]}>
+                                                <Col span={24} md={12}>
+                                                    <div className="p-tb-8 p-lr-16 bg-gray item-active">
+                                                        <b className="font-size-16px">Thanh toán khi nhận hàng</b>
+                                                        <p>Thanh toán bằng tiền mặt khi nhận hàng tại nhà hoặc showroom.</p>
+                                                    </div>
+                                                </Col>
+                                                <Col span={24} md={12}>
+                                                    <div className="p-tb-8 p-lr-16 bg-gray">
+                                                        <b className="font-size-16px">Thanh toán Online qua cổng VNPAY</b>
+                                                        <p>Thanh toán qua Internet Banking, Visa, Master, JCB, VNPAY-QR.</p>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </div>
 
-                                <button type="submit" className="addTOCart__btn">
-                                    ĐẶT HÀNG NGAY
-                                </button>
-                            </form>
-                        </Col>
+                                        <button type="submit" className="addTOCart__btn">
+                                            ĐẶT HÀNG NGAY
+                                        </button>
+                                    </form>
+                                </Col>
 
-                        <Col lg="4" md="6">
-                            <div className="checkout__bill">
-                                <h6 className="d-flex align-items-center justify-content-between mb-3">
-                                    Subtotal: <span>${cartTotalAmount}</span>
-                                </h6>
-                                <h6 className="d-flex align-items-center justify-content-between mb-3">
-                                    Shipping: <span>${shippingCost}</span>
-                                </h6>
-                                <div className="checkout__total">
-                                    <h5 className="d-flex align-items-center justify-content-between">
-                                        Total: <span>${totalAmountOrder}</span>
-                                    </h5>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
-        </Helmet>
+                                <Col lg="4" md="6">
+                                    <div className="checkout__bill">
+                                        <h6 className="d-flex align-items-center justify-content-between mb-3">
+                                            Subtotal: <span>${cartTotalAmount}</span>
+                                        </h6>
+                                        <h6 className="d-flex align-items-center justify-content-between mb-3">
+                                            Shipping: <span>${shippingCost}</span>
+                                        </h6>
+                                        <h6 className="d-flex align-items-center justify-content-between mb-3">
+                                            Sale: <span>${Sale}</span>
+                                        </h6>
+                                        <div className="checkout__total">
+                                            <h5 className="d-flex align-items-center justify-content-between">
+                                                Total: <span>${totalAmountOrder}</span>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </section>
+                </Helmet>
+            )}
+        </>
     )
 }
 

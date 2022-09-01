@@ -17,7 +17,6 @@ const Comment = () => {
     const currentUser = useSelector((state) => state.AuthReducer.currentUser)
     const username = useSelector((state) => state.AuthReducer.infoUser?.username)
     const img = useSelector((state) => state.AuthReducer.infoUser?.img) || defaultAvt
-    console.log('img', img)
     const docRef = doc(db, 'comment', id)
     useEffect(() => {
         const docSnap = async () => {
@@ -36,7 +35,7 @@ const Comment = () => {
         e.preventDefault()
         const commentUser = [{ idUser: currentUser, nameUser: username, imgUser: img, commentTitle: reviewMsg, date: new Date(), userRacting: ractingValue }]
         setReviewMsg('')
-
+        console.log({ commentUser })
         try {
             await setDoc(doc(db, 'comment', id), {
                 commentUser: [...commentUser],
@@ -80,15 +79,17 @@ const Comment = () => {
 
     // //Tong so tat ca binh luan
     const rateTotals = data?.commentUser.length
-    console.log({ rateTotals })
 
     // // tim user danh gia sao >0
     const positiveStar = data?.commentUser.filter((star) => star.userRacting > 0)
     const numberStart = (number) => data?.commentUser.filter((star) => star.userRacting === number).length
     console.log('1', numberStart(1))
     // const towStar = data?.commentUser.filter((star) => (star.userRacting = 2))
+
+    //từ tù
     const starAvg = positiveStar?.reduce((totalStar, star) => totalStar + star.userRacting, 0) / positiveStar?.length
-    console.log({ starAvg })
+    // console.log('1', typeof Math.floor(starAvg) == 'number' && Math.floor(starAvg) > 0)
+
     const rates = [1, 2, 3, 4, 5]
     return (
         <div className="comment">
@@ -101,16 +102,19 @@ const Comment = () => {
                 <div className="overview d-flex p-tb-16">
                     {/* tổng kết */}
                     <div className="d-flex flex-direction-column align-i-center overview--total">
-                        <h2 className="font-size-32px">{starAvg.toFixed(1)}</h2>
-                        {starAvg && <Rate disabled defaultValue={Math.floor(starAvg)} />}
-                        <p className="t-color-gray font-weight-500">{rateTotals} nhận xét</p>
+                        <h2 className="font-size-32px">{starAvg.toFixed(1) === 'NaN' ? 0 : starAvg.toFixed(1)}</h2>
+                        {/* <Rate disabled defaultValue={Math.floor(starAvg)} */}
+
+                        {typeof Math.floor(starAvg) == 'number' && Math.floor(starAvg) > 0 ? <Rate disabled value={Math.floor(starAvg)} /> : <Rate disabled value={0} />}
+
+                        <p className="t-color-gray font-weight-500">{typeof rateTotals === 'undefined' ? 0 : rateTotals} nhận xét</p>
                     </div>
                     {/* chi tiết */}
                     <div className="overview--detail d-flex flex-grow-1 flex-direction-column p-lr-16">
                         {rates.map((item, index) => (
                             <div key={index} className="d-flex justify-content-between">
                                 <Rate disabled defaultValue={item} style={{ fontSize: 14, flexBasis: 100 }} />
-                                <Progress percent={(numberStart.length / positiveStar) * 100} type="line" showInfo={false} style={{ width: 172 }} />
+                                {positiveStar && <Progress percent={(numberStart(item) / positiveStar?.length) * 100} type="line" showInfo={false} style={{ width: 172 }} />}
                                 <span>{numberStart(item)}</span>
                             </div>
                         ))}

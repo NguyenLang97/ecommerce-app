@@ -1,14 +1,15 @@
 import React, { useRef, useEffect } from 'react'
-import defaultAvt from '../../assets/images/default-avt.png'
+import { MenuOutlined, ReconciliationOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { AutoComplete, Badge, Button, Drawer, Dropdown, Input, Menu, message } from 'antd'
 
-import { Container } from 'reactstrap'
+import defaultAvt from '../../assets/images/default-avt.png'
 import logo from '../../assets/images/logo.png'
 import { NavLink, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleCartUi } from '../../store/cart_ui/cart_ui.action.jsx'
 import { logoutStart } from '../../store/auth/auth.action'
 
-import './header.css'
+import './header.scss'
 
 const nav__links = [
     {
@@ -46,16 +47,16 @@ const Header = () => {
 
     return (
         <header className="header header__shrink">
-            <Container>
+            <div className='container'>
                 <div className="nav__wrapper d-flex align-items-center justify-content-between">
-                    <Link to={'/'} className="logo">
+                    <Link to={'/'} className="nav__logo text-center">
                         <img src={logo} alt="logo" />
                         {/* <h5>Tasty Treat</h5> */}
                     </Link>
 
                     {/* ======= menu ======= */}
                     <div className="navigation" ref={menuRef} onClick={toggleMenu}>
-                        <div className="menu d-flex align-items-center gap-5">
+                        <div className="navigation__menu d-flex align-items-center gap-5">
                             {nav__links.map((item, index) => (
                                 <NavLink to={item.path} key={index} className={(navClass) => (navClass.isActive ? 'active__menu' : '')}>
                                     {item.display}
@@ -65,7 +66,7 @@ const Header = () => {
                     </div>
 
                     {/* ======== nav right icons ========= */}
-                    <div className="nav__right text d-flex align-items-center gap-4">
+                    <div className="nav__right d-flex align-items-center gap-4">
                         <span className="cart__icon" onClick={toggleCart}>
                             <div className="cart__icon-wrap d-flex align-items-center justify-content-center gap-4">
                                 <i className="cart__icon-icon ri-shopping-cart-2-line"></i>
@@ -115,11 +116,11 @@ const Header = () => {
                         </div>
                         {/* mobile menu */}
                         <span className="mobile__menu" onClick={toggleMenu}>
-                            <i class="ri-menu-line"></i>
+                            <MenuOutlined className="menu-icon" />
                         </span>
                     </div>
                 </div>
-            </Container>
+            </div>
         </header>
     )
 }

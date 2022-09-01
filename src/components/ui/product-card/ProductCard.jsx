@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 
 import './product-card.css'
 
@@ -14,12 +14,12 @@ const ProductCard = (props) => {
 
     const { id, title, img, price, total } = props.item
     const dispatch = useDispatch()
-
-    const addToCart = () => {
+    useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems))
         localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
         localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
-
+    }, [totalQuantity])
+    const addToCart = () => {
         dispatch(
             addItem({
                 id,
@@ -44,6 +44,7 @@ const ProductCard = (props) => {
                 </h5>
                 <div className=" d-flex flex-column align-items-center justify-content-between ">
                     <span className="product__price">${price}</span>
+                    <span className="product__price">Remain: {total}</span>
 
                     <button className="addToCart__btn" onClick={addToCart}>
                         Add to Cart

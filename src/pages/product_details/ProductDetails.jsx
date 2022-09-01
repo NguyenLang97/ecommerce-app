@@ -26,6 +26,12 @@ const ProductDetails = () => {
     const username = useSelector((state) => state.AuthReducer.infoUser?.username)
     const img = useSelector((state) => state.AuthReducer.infoUser?.img)
 
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartItems))
+        localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
+        localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
+    }, [totalQuantity])
+
     const { id } = useParams()
     console.log(id)
     const dispatch = useDispatch()
@@ -55,10 +61,6 @@ const ProductDetails = () => {
     const relatedProduct = allProducts.filter((item) => product.category === item.category)
 
     const addProduct = () => {
-        localStorage.setItem('cart', JSON.stringify(cartItems))
-        localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
-        localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
-
         if (product) {
             const { title, price, category, description, img } = product
             dispatch(
@@ -113,6 +115,9 @@ const ProductDetails = () => {
                                         </p>
                                         <p className="category mb-5">
                                             Category: <span>{product.category}</span>
+                                        </p>
+                                        <p className="category mb-5">
+                                            Quantity: <span>{product.total}</span>
                                         </p>
 
                                         <button onClick={addProduct} className="addTOCart__btn">

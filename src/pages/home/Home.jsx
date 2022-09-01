@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Button, Result } from 'antd'
+import { Link, Redirect } from 'react-router-dom'
 
 import Helmet from '../../components/helmet/Helmet'
 import { Container, ListGroup, ListGroupItem, Col, Row } from 'reactstrap'
@@ -39,6 +41,15 @@ const Home = () => {
 
     const currentUser = useSelector((state) => state.AuthReducer.currentUser)
     const infoUser = useSelector((state) => state.AuthReducer.infoUser)
+
+    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
+    const cartItems = useSelector((state) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartItems))
+        localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
+        localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
+    }, [totalQuantity])
 
     useEffect(() => {
         localStorage.setItem('currentUser', JSON.stringify(currentUser))
@@ -178,7 +189,7 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
-
+            
             {/* Sản phẩm bán chạy: Laptop */}
             <section className="pt-0">
                 <Container>

@@ -11,6 +11,9 @@ import CartTable from './cartTable/CartTable'
 const CartPage = () => {
     const cartItems = useSelector((state) => state.CartReducer.cartItems)
     const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
+    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    console.log({ totalQuantity })
+
     return (
         <Helmet title="Cart">
             <CommonSection title="Your Cart" />
@@ -40,6 +43,9 @@ const CartPage = () => {
                             )} */}
                             <CartTable />
                             <div className="mt-4">
+                                <h6>
+                                    Total Product: <span className="cart__subtotal">{totalQuantity}</span>
+                                </h6>
                                 <h6>
                                     Subtotal: $<span className="cart__subtotal">{totalAmount}</span>
                                 </h6>
