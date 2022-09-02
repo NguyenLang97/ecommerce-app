@@ -1,17 +1,17 @@
-import { Col, Row } from 'reactstrap'
 import React from 'react'
+import { Col, Row } from 'antd'
 import './famous_brand.scss'
 
 // fn: hiển thị danh sách thương hiệu
 function showBrandList(list) {
     return list.map((item, index) => (
-        <Col lg="3" md="6" key={index}>
+        <Col span={12} md={6} key={index}>
             <div className="brand-item text-center">
                 <a href={item.link} target="blank">
                     <img className="bor-rad-8" width="100%" src={item.src} alt="Photo" />
                 </a>
-                <p className="fw-bold ">{item.title}</p>
-                <span className="">{item.desc}</span>
+                <h4>{item.title}</h4>
+                <span>{item.desc}</span>
             </div>
         </Col>
     ))
@@ -48,10 +48,10 @@ const list = [
 // rendering ...
 function FamousBrand() {
     return (
-        <div className="p-16 Famous-Brand">
-            <Row>
-                <Col lg="12">
-                    <h5 className="fw-bold pt-2">Thương hiệu nổi bật</h5>
+        <div className="p-16 famous-brand">
+            <Row gutter={[16, 16]}>
+                <Col span={24}>
+                    <h2 className="fw-bold pt-2">Thương hiệu nổi bật</h2>
                     <div className="underline-title"></div>
                 </Col>
                 {showBrandList(list)}

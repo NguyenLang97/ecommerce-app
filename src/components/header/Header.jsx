@@ -40,14 +40,15 @@ const Header = () => {
     const dispatch = useDispatch()
 
     const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
+    // const toggleMenu = () => console.log('1')
 
     const toggleCart = () => {
         dispatch(toggleCartUi(true))
     }
 
     return (
-        <header className="header header__shrink">
-            <div className='container'>
+        <header className="header">
+            <div className="header__container container">
                 <div className="nav__wrapper d-flex align-items-center justify-content-between">
                     <Link to={'/'} className="nav__logo text-center">
                         <img src={logo} alt="logo" />
@@ -58,7 +59,7 @@ const Header = () => {
                     <div className="navigation" ref={menuRef} onClick={toggleMenu}>
                         <div className="navigation__menu d-flex align-items-center gap-5">
                             {nav__links.map((item, index) => (
-                                <NavLink to={item.path} key={index} className={(navClass) => (navClass.isActive ? 'active__menu' : '')}>
+                                <NavLink to={item.path} key={index} className={(navClass) => (navClass.isActive ? 'navigation__menu--active' : '')}>
                                     {item.display}
                                 </NavLink>
                             ))}
@@ -67,56 +68,60 @@ const Header = () => {
 
                     {/* ======== nav right icons ========= */}
                     <div className="nav__right d-flex align-items-center gap-4">
-                        <span className="cart__icon" onClick={toggleCart}>
-                            <div className="cart__icon-wrap d-flex align-items-center justify-content-center gap-4">
-                                <i className="cart__icon-icon ri-shopping-cart-2-line"></i>
-                                <span className="cart__badge">{totalQuantity}</span>
+                        <div className="nav__cart-wrap position-relative" onClick={toggleCart}>
+                            <div className="nav__cart d-flex align-items-center justify-content-center gap-4">
+                                <ShoppingCartOutlined className="nav__cart-icon d-block" />
+                                <span className="nav__cart-quantity">{totalQuantity}</span>
                             </div>
-                            <span className="cart__icon-title cursor-pointer">Giỏ hàng</span>
-                        </span>
+                            <p className="nav__cart-title">Giỏ hàng</p>
+                        </div>
                         <div className="nav__user-wrap position-relative">
                             <Link to={isAuth ? '/account' : '/login'} className="nav__user ">
                                 {!isAuth ? (
-                                    <div className="navbar-tool-item d-flex flex-row align-items-center justify-content-center  ">
+                                    <div className="nav__user-tool d-flex flex-row align-items-center justify-content-center  ">
                                         {/* <UserOutlined className="icon m-r-12" /> */}
-                                        <img src={defaultAvt} className="defaultAvt" />
+                                        <img src={defaultAvt} className="nav__user-img" />
                                         <div className="d-flex flex-column">
                                             <span className="title">Đăng nhập</span>
                                             <span className="title">Đăng ký</span>
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="navbar-tool-item navbar-tool-item--logined d-flex flex-column align-items-center p-l-0">
-                                        <img src={img || defaultAvt} size={20} className="defaultAvt" />
-                                        <span className="title">{username}</span>
+                                    <div className="nav__user-tool nav__user-tool--logined d-flex flex-column align-items-center p-l-0">
+                                        <img src={img || defaultAvt} size={20} className="nav__user-img" />
+                                        <span className="nav__user-name">{username}</span>
                                     </div>
                                 )}
                             </Link>
                             {!isAuth ? (
-                                <div className="user__action  flex-column position-absolute bg-white">
+                                <div className="nav__user-action flex-column position-absolute bg-white gap-2">
                                     <Link to="/register">
-                                        <p className="user__action-title">Đăng ký</p>
+                                        <Button size="large" className="nav__user-action-title w-100 btn-secondary">
+                                            Đăng ký
+                                        </Button>
                                     </Link>
                                     <Link to="/login">
-                                        <p className="user__action-title" onClick={() => dispatch(logoutStart())}>
+                                        <Button size="large" className="nav__user-action-title w-100 btn-secondary" onClick={() => dispatch(logoutStart())}>
                                             Đăng nhập
-                                        </p>
+                                        </Button>
                                     </Link>
                                 </div>
                             ) : (
-                                <div className="user__action user__action--logined flex-column position-absolute bg-white">
-                                    <Link to="/account">
-                                        <p className="user__action-title">Quản lý tài khoản</p>
+                                <div className="nav__user-action nav__user-action--logined flex-column position-absolute bg-white gap-2">
+                                    <Link to="/account" className='nav__user-link'>
+                                        <Button size="large" className="nav__user-action-title w-100 btn-secondary">
+                                            Quản lý tài khoản
+                                        </Button>
                                     </Link>
-                                    <p className="user__action-title" onClick={() => dispatch(logoutStart())}>
+                                    <Button size="large" className="nav__user-action-title w-100 btn-secondary" onClick={() => dispatch(logoutStart())}>
                                         Đăng xuất
-                                    </p>
+                                    </Button>
                                 </div>
                             )}
                         </div>
                         {/* mobile menu */}
-                        <span className="mobile__menu" onClick={toggleMenu}>
-                            <MenuOutlined className="menu-icon" />
+                        <span className="nav__mobile" onClick={toggleMenu}>
+                            <MenuOutlined className="nav__mobile-icon" />
                         </span>
                     </div>
                 </div>

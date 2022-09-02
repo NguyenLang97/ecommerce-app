@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Result } from 'antd'
-import { Link, Redirect } from 'react-router-dom'
 
 import Helmet from '../../components/helmet/Helmet'
-import { Container, ListGroup, ListGroupItem, Col, Row } from 'reactstrap'
+import { Container, Col, Row } from 'antd'
 import '../../styles/hero-section.css'
 
 // import Category from '../../components/ui/category/Category.jsx'
@@ -106,107 +104,104 @@ const Home = () => {
     }, [category])
 
     return (
-        <Helmet title="Home">
-            <section>
-                <SaleOff />
-            </section>
+        <div className="home">
+            <Helmet title="home">
+                {/* Sale off */}
+                <section>
+                    <SaleOff />
+                </section>
 
-            {/* <section className="pt-0">
-                <Category />
-            </section> */}
-
-            {/* Thương hiệu nổi bật */}
-            <section>
-                <Container>
+                {/* Thương hiệu nổi bật */}
+                <section className="home__famous-brand-wrap container">
                     <Row>
                         <Col className="home__famous-brand bg-white box-sha-home bor-rad-8 ">
                             <FamousBrand />
                         </Col>
                     </Row>
-                </Container>
-            </section>
+                </section>
 
-            {/* Quảng cáo */}
-            <section>
-                <Container>
+                {/* Quảng cáo */}
+                <section className="home__adv-wrap container">
                     <Row>
-                        <Col className="adv">
+                        <Col className="home__adv w-100">
                             <a href="https://www.apple.com/watch/" target="blank">
-                                <img className="adv-img w-100 bor-rad-8" src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268459/others/1_iorzsj.webp" />
+                                <img className="home__adv-img w-100 bor-rad-8" src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268459/others/1_iorzsj.webp" />
                             </a>
                         </Col>
                     </Row>
-                </Container>
-            </section>
+                </section>
 
-            <section>
-                <Container>
+                <section className="home__category-wrap container">
                     <Row>
-                        <Col lg="12" className="text-center">
+                        <Col span={24} className="text-center">
                             <h2>Sản phẩm phổ biến</h2>
                         </Col>
 
-                        <Col lg="12">
-                            <div className="food__category d-flex align-items-center justify-content-center gap-4">
-                                <button className={`all__btn  ${category === 'ALL' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('ALL')}>
-                                    All
-                                </button>
-                                <button className={`d-flex align-items-center gap-2 ${category === 'Laptop' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Laptop')}>
-                                    <img src={laptopImg} alt="" />
-                                    Laptop
-                                </button>
-
-                                <button className={`d-flex align-items-center gap-2 ${category === 'Điện thoại' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Điện thoại')}>
-                                    <img src={mobileImg} alt="" />
-                                    Điện thoại
-                                </button>
-
-                                <button className={`d-flex align-items-center gap-2 ${category === 'Mouse' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Mouse')}>
-                                    <img src={mouseImg} alt="" />
-                                    Chuột
-                                </button>
+                        <Col span={24}>
+                            <div className="home__category d-flex align-items-center justify-content-center gap-4-xl">
+                                <Col xl={6}>
+                                    <button className={`all__btn  ${category === 'ALL' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('ALL')}>
+                                        All
+                                    </button>
+                                </Col>
+                                <Col xl={6}>
+                                    <button className={`d-flex align-items-center ${category === 'Laptop' ? 'home__category-btn--active' : ''} `} onClick={() => setCategory('Laptop')}>
+                                        <img src={laptopImg} alt="" />
+                                        Laptop
+                                    </button>
+                                </Col>
+                                <Col xl={6}>
+                                    <button className={`d-flex align-items-center ${category === 'Điện thoại' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('Điện thoại')}>
+                                        <img src={mobileImg} alt="" />
+                                        Điện thoại
+                                    </button>
+                                </Col>
+                                <Col xl={6}>
+                                    <button className={`d-flex align-items-center ${category === 'Mouse' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('Mouse')}>
+                                        <img src={mouseImg} alt="" />
+                                        Chuột
+                                    </button>
+                                </Col>
                             </div>
                         </Col>
-
-                        {filter.map((item) => (
-                            <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
-                                <ProductCard item={item} />
-                            </Col>
-                        ))}
+                        <Row gutter={16} className="w-100">
+                            {filter.map((item) => (
+                                <Col span={24} sm={12} lg={8} xl={6} key={item.id} className="mt-5 w-100">
+                                    <ProductCard item={item} />
+                                </Col>
+                            ))}
+                        </Row>
                     </Row>
-                </Container>
-            </section>
+                </section>
 
-            {/* Quảng cáo */}
-            <section>
-                <Container>
+                {/* Quảng cáo */}
+                <section className="home__adv-wrap container">
                     <Row>
-                        <Col className="adv">
+                        <Col className="home__adv w-100">
                             <a href="https://www.panasonic.com/vn/" target="blank">
-                                <img className="adv-img w-100 bor-rad-8" src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268459/others/2_wapowv.webp" />
+                                <img className="home__adv-img w-100 bor-rad-8" src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268459/others/2_wapowv.webp" />
                             </a>
                         </Col>
                     </Row>
-                </Container>
-            </section>
-            
-            {/* Sản phẩm bán chạy: Laptop */}
-            <section className="pt-0">
-                <Container>
+                </section>
+
+                {/* Sản phẩm bán chạy: Laptop */}
+                <section className="container">
                     <Row>
-                        <Col lg="12" className="text-center mb-5 ">
+                        <Col span={24} className="text-center mb-5 ">
                             <h2>Sản phẩm bán chạy</h2>
                         </Col>
-
+                    </Row>
+                    <Row gutter={16}>
                         {hotProduct.map((item) => (
-                            <Col lg="3" md="4" sm="6" xs="6" key={item.id}>
+                            <Col span={24} sm={12} lg={8} xl={6} key={item.id}>
                                 <ProductCard item={item} />
                             </Col>
                         ))}
                     </Row>
-                </Container>
-            </section>
-        </Helmet>
+                </section>
+            </Helmet>
+        </div>
     )
 }
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Button, Result } from 'antd'
 import { Link, Redirect } from 'react-router-dom'
 
