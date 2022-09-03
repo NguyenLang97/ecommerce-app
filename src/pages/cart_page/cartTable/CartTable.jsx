@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteItem, removeItem, addItem } from '../../../store/cart/cart.action'
+import './cart_table.scss'
 
 const CartTable = () => {
     const dispatch = useDispatch()
     const cartItems = useSelector((state) => state.CartReducer.cartItems)
 
-    const { id, title, price, img, quantity } = cartItems
-    console.log({ id })
+    // const { id, title, price, img, quantity } = cartItems
+    // console.log({ cartItems })
 
     const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
     const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
@@ -42,9 +43,9 @@ const CartTable = () => {
             {cartItems.length === 0 ? (
                 <h5 className="text-center">Your cart is empty</h5>
             ) : (
-                <table className="table table-bordered">
+                <table className="table table-bordered table-responsive">
                     <thead>
-                        <tr>
+                        <tr className="text-center">
                             <th>Image</th>
                             <th>Product Title</th>
                             <th>Price</th>

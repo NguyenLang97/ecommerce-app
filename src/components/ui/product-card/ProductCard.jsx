@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
+import { Button, Col, Image, InputNumber, message, Rate, Row } from 'antd'
 
-import './product-card.css'
+import './product-card.scss'
 
 import { Link } from 'react-router-dom'
 
@@ -32,23 +33,23 @@ const ProductCard = (props) => {
 
     return (
         <div className="product__item">
-            <div className="product__img">
+            <div className="product__item-img">
                 <Link to={`/products/${id}`}>
                     <img src={img[0].img} alt="product-img" className="w-50" />
                 </Link>
             </div>
 
-            <div className="product__content">
+            <div className="product__item-content">
                 <h5>
                     <Link to={`/products/${id}`}>{title}</Link>
                 </h5>
-                <div className=" d-flex flex-column align-items-center justify-content-between ">
-                    <span className="product__price">${price}</span>
-                    <span className="product__price">Remain: {total}</span>
+                <div className="product__item-info d-flex flex-column align-items-center justify-content-between ">
+                    <span className="product__item-price">${price}</span>
+                    <span className="product__item-total">Remain: {total}</span>
 
-                    <button className="addToCart__btn" onClick={addToCart}>
-                        Add to Cart
-                    </button>
+                    <Button onClick={addToCart} size="large" className="w-100 btn btn-group-item" style={{ backgroundColor: '#3555c5' }}>
+                        THÊM GIỎ HÀNG
+                    </Button>
                 </div>
             </div>
         </div>

@@ -2,9 +2,9 @@ import React from 'react'
 
 import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
-import './cart_page.css'
+import './cart_page.scss'
 import { useSelector, useDispatch } from 'react-redux'
-import { Container, Row, Col } from 'reactstrap'
+import { Row, Col, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import CartTable from './cartTable/CartTable'
 
@@ -17,11 +17,10 @@ const CartPage = () => {
     return (
         <Helmet title="Cart">
             <CommonSection title="Your Cart" />
-            <section>
-                <Container>
-                    <Row>
-                        <Col lg="12">
-                            {/* {cartItems.length === 0 ? (
+            <section className="cart-page container">
+                <Row>
+                    <Col lg={24}>
+                        {/* {cartItems.length === 0 ? (
                                 <h5 className="text-center">Your cart is empty</h5>
                             ) : (
                                 <table className="table table-bordered">
@@ -41,27 +40,26 @@ const CartPage = () => {
                                     </tbody>
                                 </table>
                             )} */}
-                            <CartTable />
-                            <div className="mt-4">
-                                <h6>
-                                    Total Product: <span className="cart__subtotal">{totalQuantity}</span>
-                                </h6>
-                                <h6>
-                                    Subtotal: $<span className="cart__subtotal">{totalAmount}</span>
-                                </h6>
-                                <p>Taxes and shipping will calculate at checkout</p>
-                                <div className="cart__page-btn">
-                                    <button className="addTOCart__btn me-4">
-                                        <Link to="/products">Continue Shopping</Link>
-                                    </button>
-                                    <button className="addTOCart__btn">
-                                        <Link to="/checkout">Proceed to checkout</Link>
-                                    </button>
-                                </div>
+                        <CartTable />
+                        <div className="mt-4">
+                            <h6>
+                                Total Product: <span className="cart__subtotal">{totalQuantity}</span>
+                            </h6>
+                            <h6>
+                                Subtotal: $<span className="cart__subtotal">{totalAmount}</span>
+                            </h6>
+                            <p>Taxes and shipping will calculate at checkout</p>
+                            <div className="cart__page-btn d-flex justify-content-between flex-row gap-3 flex-wrap">
+                                <Button size="large" className="btn btn-group-item" style={{ backgroundColor: '#3555c5' }}>
+                                    <Link to="/products">Continue Shopping</Link>
+                                </Button>
+                                <Button size="large" className="btn btn-group-item" style={{ backgroundColor: '#3555c5' }}>
+                                    <Link to="/checkout">Proceed to checkout</Link>
+                                </Button>
                             </div>
-                        </Col>
-                    </Row>
-                </Container>
+                        </div>
+                    </Col>
+                </Row>
             </section>
         </Helmet>
     )

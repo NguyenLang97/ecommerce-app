@@ -1,12 +1,11 @@
 import React from 'react'
-import { ListGroupItem } from 'reactstrap'
+import { CloseSquareOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons'
 
-import '../../../styles/cart-item.css'
+import './cart-item.scss'
 
 import { useDispatch } from 'react-redux'
-import { addItem, removeItem, deleteItem } from '../../../store/cart/cart.action'
-
-// import { cartActions } from '../../../store/shopping-cart/cartSlice'
+import { addItem, removeItem, deleteItem } from '../../../../store/cart/cart.action'
+import { List } from 'antd'
 
 const CartItem = ({ item }) => {
     const { id, title, price, img, quantity, totalPrice } = item
@@ -34,36 +33,36 @@ const CartItem = ({ item }) => {
     }
 
     return (
-        <ListGroupItem className="border-0 cart__item">
-            <div className="cart__item-info d-flex gap-2">
+        <List className="cart__item p-2">
+            <div className="cart__content d-flex gap-2">
                 <img src={img[0].img} alt="product-img" />
 
                 <div className="cart__product-info w-100 d-flex align-items-center gap-4 justify-content-between">
-                    <div>
-                        <h6 className="cart__product-title">{title}</h6>
-                        <p className=" d-flex align-items-center gap-5 cart__product-price">
+                    <div className="cart__item">
+                        <h6 className="cart__item-title">{title}</h6>
+                        <p className=" cart__item-price d-flex align-items-center gap-5">
                             SL: {quantity}
                             <span>{price} VND/SP</span>
                             <span className="quantity">{Number(totalPrice)} VND</span>
                         </p>
 
-                        <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
-                            <span className="increase__btn" onClick={incrementItem}>
-                                <i class="ri-add-line"></i>
-                            </span>
+                        <div className="cart__btn d-flex align-items-center justify-content-between ">
+                            <div className="d-flex cart__btn-increase" onClick={incrementItem}>
+                                <PlusOutlined />
+                            </div>
                             <span className="quantity">{quantity}</span>
-                            <span className="decrease__btn" onClick={decreaseItem}>
-                                <i class="ri-subtract-line"></i>
-                            </span>
+                            <div className="d-flex cart__btn-decrease" onClick={decreaseItem}>
+                                <MinusOutlined />
+                            </div>
                         </div>
                     </div>
 
-                    <span className="delete__btn" onClick={delItem}>
-                        <i class="ri-close-line"></i>
+                    <span className="cart__delete" onClick={delItem}>
+                        <CloseSquareOutlined />
                     </span>
                 </div>
             </div>
-        </ListGroupItem>
+        </List>
     )
 }
 

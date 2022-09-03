@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Helmet from '../../components/helmet/Helmet'
 import { Container, Col, Row } from 'antd'
-import '../../styles/hero-section.css'
 
 // import Category from '../../components/ui/category/Category.jsx'
 import _ from 'lodash'
@@ -138,25 +137,25 @@ const Home = () => {
                         </Col>
 
                         <Col span={24}>
-                            <div className="home__category d-flex align-items-center justify-content-center gap-4-xl">
-                                <Col xl={6}>
+                            <div className="home__category d-flex align-items-center justify-content-between gap-4-xl flex-wrap">
+                                <Col sm={6} md={6} lg={6} xl={6}>
                                     <button className={`all__btn  ${category === 'ALL' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('ALL')}>
                                         All
                                     </button>
                                 </Col>
-                                <Col xl={6}>
+                                <Col sm={6} md={6} lg={6} xl={6}>
                                     <button className={`d-flex align-items-center ${category === 'Laptop' ? 'home__category-btn--active' : ''} `} onClick={() => setCategory('Laptop')}>
                                         <img src={laptopImg} alt="" />
                                         Laptop
                                     </button>
                                 </Col>
-                                <Col xl={6}>
+                                <Col sm={6} md={6} lg={6} xl={6}>
                                     <button className={`d-flex align-items-center ${category === 'Điện thoại' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('Điện thoại')}>
                                         <img src={mobileImg} alt="" />
                                         Điện thoại
                                     </button>
                                 </Col>
-                                <Col xl={6}>
+                                <Col sm={6} md={6} lg={6} xl={6}>
                                     <button className={`d-flex align-items-center ${category === 'Mouse' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('Mouse')}>
                                         <img src={mouseImg} alt="" />
                                         Chuột
