@@ -1,9 +1,7 @@
-import React from 'react'
-
 import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
 import './cart_page.scss'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Row, Col, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import CartTable from './cartTable/CartTable'

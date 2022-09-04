@@ -6,12 +6,13 @@ import defaultAvt from '../../assets/images/default-avt.png'
 import logo from '../../assets/images/logo.png'
 import { NavLink, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleCartUi } from '../../store/cart_ui/cart_ui.action.jsx'
+import { toggleCartUi } from '../../store/cart_ui/cart_ui.action'
 import { logoutStart } from '../../store/auth/auth.action'
+import RootReducerState from '../../models/root_reducer'
 
 import './header.scss'
 
-const nav__links = [
+const NavLinks = [
     {
         display: 'Trang chủ',
         path: '/home',
@@ -30,16 +31,29 @@ const nav__links = [
     },
 ]
 
-const Header = () => {
-    const menuRef = useRef(null)
-    const isAuth = useSelector((state) => state.AuthReducer.currentUser)
-    const username = useSelector((state) => state.AuthReducer.infoUser?.username)
-    const img = useSelector((state) => state.AuthReducer.infoUser?.img)
+// interface RootReducerState {
+//     AuthReducer: {
+//         currentUser: boolean
+//         infoUser: {
+//             username: boolean
+//             img: string
+//         }
+//     }
+//     CartReducer: {
+//         totalQuantity: boolean
+//     }
+// }
 
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+const Header = () => {
+    const menuRef = useRef<HTMLDivElement>(null)
+    const isAuth = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
+    const username = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.username)
+    const img = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.img)
+
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
     const dispatch = useDispatch()
 
-    const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
+    const toggleMenu = () => menuRef.current!.classList.toggle('show__menu')
     // const toggleMenu = () => console.log('1')
 
     const toggleCart = () => {
@@ -58,7 +72,7 @@ const Header = () => {
                     {/* ======= menu ======= */}
                     <div className="navigation" ref={menuRef} onClick={toggleMenu}>
                         <div className="navigation__menu d-flex align-items-center gap-5">
-                            {nav__links.map((item, index) => (
+                            {NavLinks.map((item, index) => (
                                 <NavLink to={item.path} key={index} className={(navClass) => (navClass.isActive ? 'navigation__menu--active' : '')}>
                                     {item.display}
                                 </NavLink>
@@ -88,7 +102,7 @@ const Header = () => {
                                     </div>
                                 ) : (
                                     <div className="nav__user-tool nav__user-tool--logined d-flex flex-column align-items-center p-l-0">
-                                        <img src={img || defaultAvt} size={20} className="nav__user-img" />
+                                        <img src={img || defaultAvt} className="nav__user-img" />
                                         <span className="nav__user-name">{username}</span>
                                     </div>
                                 )}
@@ -108,7 +122,7 @@ const Header = () => {
                                 </div>
                             ) : (
                                 <div className="nav__user-action nav__user-action--logined flex-column position-absolute bg-white gap-2">
-                                    <Link to="/account" className='nav__user-link'>
+                                    <Link to="/account" className="nav__user-link">
                                         <Button size="large" className="nav__user-action-title w-100 btn-secondary">
                                             Quản lý tài khoản
                                         </Button>

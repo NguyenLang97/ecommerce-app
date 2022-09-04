@@ -1,3 +1,8 @@
+// font size
+.font-size-14 {
+    font-size: 0.875rem;
+}
+
 // underline title sign up - login
 .underline-title {
     position: relative;
@@ -64,6 +69,9 @@
 .bor-rad-4 {
     border-radius: 4px;
 }
+.bor-right {
+    border-right: 1px dashed #f00;
+}
 
 .item-active {
     border: solid 1px #3a5dd9;
@@ -71,6 +79,12 @@
 }
 
 // padding
+.p-4x {
+    padding: 4px;
+}
+.p-12 {
+    padding: 12px;
+}
 .p-16 {
     padding: 16px;
 }
@@ -85,6 +99,27 @@
 .p-lr-16 {
     padding-left: 16px;
     padding-right: 16px;
+}
+
+.m-b-12 {
+    margin-bottom: 12px;
+}
+
+.m-l-32 {
+    margin-left: 32px;
+}
+
+.m-l-8 {
+    margin-left: 8px;
+}
+.m-r-4 {
+    margin-right: 4px;
+}
+.m-b-4 {
+    margin-bottom: 4px;
+}
+.m-b-8 {
+    margin-bottom: 8px;
 }
 
 .btn-group-item {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Helmet from '../../components/helmet/Helmet'
 import { Container, Col, Row } from 'antd'
 
-// import Category from '../../components/ui/category/Category.jsx'
+// import Category from '../../components/ui/category/Category'
 import _ from 'lodash'
 
 import './home.scss'
@@ -24,7 +24,7 @@ import laptopImg from '../../assets/products/laptop_32px.png'
 import mobileImg from '../../assets/products/mobile_32px.png'
 import mouseImg from '../../assets/products/mouse_32px.png'
 
-import ProductCard from '../../components/ui/product-card/ProductCard.jsx'
+import ProductCard from '../../components/ui/product-card/ProductCard'
 import SaleOff from '../../components/sale_off/SaleOff'
 import FamousBrand from '../../components/famous_brand/FamousBrand'
 // import DiscountList from '../../components/DiscountList/index'
@@ -163,9 +163,9 @@ const Home = () => {
                                 </Col>
                             </div>
                         </Col>
-                        <Row gutter={16} className="w-100">
+                        <Row className="w-100 bg-white bor-rad-8 mt-5 p-3">
                             {filter.map((item) => (
-                                <Col span={24} sm={12} lg={8} xl={6} key={item.id} className="mt-5 w-100">
+                                <Col span={24} sm={12} lg={8} xl={6} key={item.id} className="w-100">
                                     <ProductCard item={item} />
                                 </Col>
                             ))}
@@ -187,11 +187,11 @@ const Home = () => {
                 {/* Sản phẩm bán chạy: Laptop */}
                 <section className="container">
                     <Row>
-                        <Col span={24} className="text-center mb-5 ">
+                        <Col span={24} className="text-center ">
                             <h2>Sản phẩm bán chạy</h2>
                         </Col>
                     </Row>
-                    <Row gutter={16}>
+                    <Row className="w-100 bg-white bor-rad-8 mt-5 p-3">
                         {hotProduct.map((item) => (
                             <Col span={24} sm={12} lg={8} xl={6} key={item.id}>
                                 <ProductCard item={item} />

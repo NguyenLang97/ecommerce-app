@@ -7,19 +7,18 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { authStart } from '../../store/auth/auth.action'
-import { logo } from '../../assets/images/logo.png'
 import './login.scss'
 import { useState } from 'react'
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     // const loginEmailRef = useRef()
     // const loginPasswordRef = useRef()
 
-    const submitHandler = (e) => {
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         // const email = loginEmailRef.current.value
         // const password = loginPasswordRef.current.value
@@ -85,7 +84,7 @@ const Login = () => {
 
                                         <div className="form-check d-flex justify-content-center mb-5">
                                             <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                                            <label className="form-check-label" for="form2Example3g">
+                                            <label className="form-check-label" htmlFor="form2Example3g">
                                                 I agree all statements in{' '}
                                                 <a href="#!" className="text-body">
                                                     <u>Terms of service</u>

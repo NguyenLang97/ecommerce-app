@@ -1,5 +1,4 @@
 import React from 'react'
-import { Carousel } from 'bootstrap'
 import './sale_off.scss'
 
 // Do cả chương trình chỉ có 1 list carousel
@@ -27,9 +26,6 @@ function SaleOff() {
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                {/* <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button> */}
             </div>
             <div className="carousel-inner">
                 <div className="carousel-item active">
@@ -41,15 +37,6 @@ function SaleOff() {
                 <div className="carousel-item">
                     <img src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608134777/saleOff/carousels/11_vhqqe1.webp" className="d-block w-100" alt="..." />
                 </div>
-                {/* <div className="carousel-item">
-                    <img src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608134777/saleOff/carousels/8_ontuqq.webp" className="d-block w-100" alt="..." />
-                </div>
-                <div className="carousel-item">
-                    <img src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608134535/saleOff/carousels/2_b1d6dd.webp" className="d-block w-100" alt="..." />
-                </div>
-                <div className="carousel-item">
-                    <img src="https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608134777/saleOff/carousels/7_gokjlq.webp" className="d-block w-100" alt="..." />
-                </div> */}
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>

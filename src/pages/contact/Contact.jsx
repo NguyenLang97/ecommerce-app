@@ -90,7 +90,6 @@ const Contact = () => {
                                             <div className="dbox w-100 d-flex align-items-start">
                                                 <div className="icon d-flex align-items-center justify-content-center">
                                                     <i class="ri-map-pin-2-fill"></i>
-
                                                 </div>
                                                 <div className="text pl-3 d-flex">
                                                     <p>

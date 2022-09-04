@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
 import { Button, Result } from 'antd'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const SuccessfulTransaction = () => {
     return (

@@ -69,7 +69,7 @@ const AllProducts = () => {
         <Helmet title="All-Products">
             <CommonSection title="All Products" />
 
-            <section className="all-products container">
+            <section className="all-products container bg-white bor-rad-8 p-16">
                 <Row gutter={16} className="d-flex flex-wrap">
                     <Col span={24} xl={12} lg={12} sm={12}>
                         <div className="search__widget d-flex align-items-center justify-content-between ">
@@ -100,7 +100,7 @@ const AllProducts = () => {
                         </Col>
                     ))}
                 </Row>
-                <Row >
+                <Row>
                     <Col span={24}>
                         <ReactPaginate pageCount={pageCount} onPageChange={changePage} previousLabel={'Prev'} nextLabel={'Next'} containerClassName=" paginationBttns " />
                     </Col>

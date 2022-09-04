@@ -1,14 +1,15 @@
 import React from 'react'
 
-import Header from '../header/Header.jsx'
-import Footer from '../footer/Footer.jsx'
+import Header from '../header/Header'
+import Footer from '../footer/Footer'
 import Routes from '../../routes/Routers'
 
-import Carts from '../ui/cart/Carts.jsx'
+import Carts from '../ui/cart/Carts'
 import { useSelector } from 'react-redux'
+import RootReducerState from '../../models/root_reducer'
 
 const Layout = () => {
-    const showCart = useSelector((state) => state.CartUiReducer.cartIsVisible)
+    const showCart = useSelector((state: RootReducerState) => state.CartUiReducer.cartIsVisible)
     return (
         <div>
             <Header />

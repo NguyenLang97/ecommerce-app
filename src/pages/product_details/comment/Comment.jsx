@@ -92,38 +92,42 @@ const Comment = () => {
 
     const rates = [1, 2, 3, 4, 5]
     return (
-        <div className="comment">
+        <div className="comment p-12">
             <div className=" d-flex align-items-center gap-5 py-3">
                 <h6 className="rev">Review</h6>
             </div>
             {/* đánh giá tổng quan */}
             <Col span={24} className="p-16">
-                <span className="font-size-28px">Đánh giá</span>
+                <h2 className="font-size-28px">Đánh giá</h2>
                 <div className="overview d-flex p-tb-16">
                     {/* tổng kết */}
-                    <div className="d-flex flex-direction-column align-i-center overview--total">
-                        <h2 className="font-size-32px">{starAvg.toFixed(1) === 'NaN' ? 0 : starAvg.toFixed(1)}</h2>
+                    <div className="d-flex flex-column align-items-center bor-right">
+                        <h3 className="font-size-32px">{starAvg.toFixed(1) === 'NaN' ? 0 : starAvg.toFixed(1)}</h3>
                         {/* <Rate disabled defaultValue={Math.floor(starAvg)} */}
 
-                        {typeof Math.floor(starAvg) == 'number' && Math.floor(starAvg) > 0 ? <Rate disabled value={Math.floor(starAvg)} /> : <Rate disabled value={0} />}
+                        {typeof Math.floor(starAvg) == 'number' && Math.floor(starAvg) > 0 ? (
+                            <Rate disabled style={{ fontSize: 14 }} className="d-flex p-12" value={Math.floor(starAvg)} />
+                        ) : (
+                            <Rate disabled style={{ fontSize: 14 }} className="d-flex p-12" value={0} />
+                        )}
 
                         <p className="t-color-gray font-weight-500">{typeof rateTotals === 'undefined' ? 0 : rateTotals} nhận xét</p>
                     </div>
                     {/* chi tiết */}
-                    <div className="overview--detail d-flex flex-grow-1 flex-direction-column p-lr-16">
+                    <div className=" d-flex  flex-column p-lr-16">
                         {rates.map((item, index) => (
                             <div key={index} className="d-flex justify-content-between">
-                                <Rate disabled defaultValue={item} style={{ fontSize: 14, flexBasis: 100 }} />
-                                {positiveStar && <Progress percent={(numberStart(item) / positiveStar?.length) * 100} type="line" showInfo={false} style={{ width: 172 }} />}
-                                <span>{numberStart(item)}</span>
+                                <Rate disabled defaultValue={item} className="d-flex m-l-8" style={{ fontSize: 14, flexBasis: 100 }} />
+                                {positiveStar && <Progress percent={(numberStart(item) / positiveStar?.length) * 100} type="line" showInfo={false} style={{ width: 172 }} className="m-l-8" />}
+                                <span className='m-l-8'>{numberStart(item)}</span>
                             </div>
                         ))}
                     </div>
                 </div>
             </Col>
 
-            <form className="comment__form-group d-flex flex-wrap flex-row" onSubmit={commentHandler}>
-                <div className="comment__form-container w-100 p-4 d-flex flex-row">
+            <form className="comment__form-group d-flex flex-wrap flex-row  mt-4" onSubmit={commentHandler}>
+                <div className="comment__form-container w-100 p-4 d-flex flex-row ">
                     <div className="comment__form">
                         <textarea
                             rows={5}
@@ -153,12 +157,12 @@ const Comment = () => {
                                 <div className="comment__user-wrap d-flex">
                                     <div className="comment__user review d-flex">
                                         <img src={item.imgUser} className="comment__user-img rounded-circle" />
-                                        <p className="comment__user-name">{item.nameUser}</p>
-                                        <Rate value={item.userRacting} disabled className="d-flex m-1" />
-                                        <p className="comment__feedback-text">{setDate(item.date.seconds)}</p>
+                                        <p className="comment__user-name m-l-8 m-b-4">{item.nameUser}</p>
+                                        <p className="comment__feedback-date m-b-4">{setDate(item.date.seconds)}</p>
                                     </div>
                                 </div>
-                                <p className="comment__feedback-text">{item.commentTitle}</p>
+                                <Rate style={{ fontSize: 14 }} value={item.userRacting} disabled className="d-flex m-l-32 m-b-8" />
+                                <p className="comment__feedback-text p-4x">{item.commentTitle}</p>
                             </div>
                         ))
                     ) : (

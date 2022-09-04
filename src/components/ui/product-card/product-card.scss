@@ -1,9 +1,12 @@
 .product__item {
     border: 1px solid #fde4e4;
     text-align: center;
-    padding: 30px;
+    padding: 20px;
+    margin-left: 10px;
     cursor: pointer;
-
+    // &:nth-child(1) {
+    //     margin-left:0;
+    // }
     &-img {
         margin-bottom: 20px;
         transition: 0.4s;
