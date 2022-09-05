@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 // import { logoutStart } from '../../redux/action'
-import { Container, Row, Col } from 'reactstrap'
+import { Row, Col } from 'antd'
 import './account_page.scss'
 import defaultAvt from '../../assets/images/default-avt.png'
 // import OrderList from './OrderList'
@@ -50,7 +50,7 @@ function AccountPage() {
             case '':
                 return (
                     <>
-                        <h2 className="m-b-16">Thông tin tài khoản</h2>
+                        <h3 className="m-b-16">Thông tin tài khoản</h3>
                         <ProfileUser />
                     </>
                 )
@@ -84,35 +84,33 @@ function AccountPage() {
     }
 
     return (
-        <section className="profile__container">
-            <Container>
-                {/* <button onClick={()=>dispatch(logoutStart())}>logout</button> */}
-                <Row>
-                    <Col lg="3" className="profile__user text-center ">
-                        <img className="w-25 mb-3 rounded-circle" src={img || defaultAvt} alt="" />
-                        <h6 className=" mb-3">
-                            Tài khoản của : <span>{username}</span>
-                        </h6>
-                        <ul className="list-group d-flex flex-column ">
-                            {menu.map((item, index) => (
-                                <Link key={index} to={`${item.key}`}>
-                                    <li className="list-group-item d-flex gap-2" onClick={() => setActiveKey(item.key)}>
-                                        {item.Icon}
-                                        {item.title}
-                                    </li>
-                                </Link>
-                            ))}
-                            <li className="list-group-item d-flex gap-2" onClick={() => dispatch(logoutStart())}>
-                                <i className="ri-logout-box-line"></i>
-                                Đăng xuất
-                            </li>
-                        </ul>
-                    </Col>
-                    <Col lg="9" className="details__user">
-                        {renderComponent(activeKey)}
-                    </Col>
-                </Row>
-            </Container>
+        <section className="profile__container container">
+            {/* <button onClick={()=>dispatch(logoutStart())}>logout</button> */}
+            <Row className="mt-5">
+                <Col lg={6} className="profile__user text-center ">
+                    <img className="w-25 mb-3 rounded-circle" src={img || defaultAvt} alt="" />
+                    <h6 className=" mb-3">
+                        Tài khoản của : <span>{username}</span>
+                    </h6>
+                    <ul className="list-group d-flex flex-column ">
+                        {menu.map((item, index) => (
+                            <Link key={index} to={`${item.key}`}>
+                                <li className="list-group-item d-flex gap-2" onClick={() => setActiveKey(item.key)}>
+                                    {item.Icon}
+                                    {item.title}
+                                </li>
+                            </Link>
+                        ))}
+                        <li className="list-group-item d-flex gap-2" onClick={() => dispatch(logoutStart())}>
+                            <i className="ri-logout-box-line"></i>
+                            Đăng xuất
+                        </li>
+                    </ul>
+                </Col>
+                <Col lg={18} className="details__user  bg-white bor-rad-8 p-5">
+                    {renderComponent(activeKey)}
+                </Col>
+            </Row>
         </section>
     )
 }

@@ -48,8 +48,8 @@ const OrderList = () => {
     console.log(data)
 
     return (
-        <div>
-            <table className="table table-striped table-bordered table-responsive">
+        <div className="table-responsive">
+            <table className="table table-striped table-bordered ">
                 <thead>
                     <tr>
                         <th scope="col">STT</th>

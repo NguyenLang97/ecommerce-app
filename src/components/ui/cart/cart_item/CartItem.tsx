@@ -1,28 +1,85 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { CloseSquareOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons'
 
 import './cart-item.scss'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addItem, removeItem, deleteItem } from '../../../../store/cart/cart.action'
-import { List } from 'antd'
+import { List, message } from 'antd'
 import CartItemsState from '../../../../models/cart_items'
+import { collection, onSnapshot } from 'firebase/firestore'
+import { db } from '../../../../firebase/firebase_config'
+import RootReducerState from '../../../../models/root_reducer'
 
-const CartItem = ( item : CartItemsState) => {
-    const { id, title, price, img, quantity, totalPrice } = item
-    console.log(item)
+interface CartsState {
+    item: CartItemsState
+}
+
+const CartItem = (prop: CartsState) => {
+    const { id, title, price, img, quantity, totalPrice } = prop.item
+    const [allProducts, setAllProducts] = useState<any[]>([])
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+
+    useEffect(() => {
+        const unsub = onSnapshot(
+            collection(db, 'products'),
+            (snapShot) => {
+                let list: any[] = []
+                snapShot.docs.forEach((doc, index) => {
+                    list.push({ id: doc.id, ...doc.data() })
+                })
+                setAllProducts(list)
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+        return () => {
+            unsub()
+        }
+    }, [])
+    const product = useMemo(() => {
+        if (allProducts) return allProducts.find((item) => item.id === id)
+    }, [allProducts])
 
     const dispatch = useDispatch()
 
     const incrementItem = () => {
-        dispatch(
-            addItem({
-                id,
-                title,
-                price,
-                img,
-            })
-        )
+        if (product) {
+            const { id, title, price, category, description, img, total } = product
+            if (product.total > 0) {
+                console.log('tang')
+
+                if (cartItems.length) {
+                    const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
+                    console.log('sl', cartItems)
+
+                    if (Number(product.total) > quantity) {
+                        console.log('dat hang')
+
+                        dispatch(
+                            addItem({
+                                id,
+                                title,
+                                price,
+                                img,
+                            })
+                        )
+                    } else {
+                        message.error('Rất tiếc đã hết hàng')
+                    }
+                } else {
+                    dispatch(
+                        addItem({
+                            id,
+                            title,
+                            price,
+                            img,
+                        })
+                    )
+                }
+            }
+        }
     }
 
     const decreaseItem = () => {

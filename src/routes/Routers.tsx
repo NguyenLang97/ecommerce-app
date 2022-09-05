@@ -1,5 +1,5 @@
-import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { ReactElement } from 'react'
 
 import Home from '../pages/home/Home'
 import AllProducts from '../pages/all_products/AllProducts'
@@ -11,10 +11,15 @@ import Login from '../pages/login/Login'
 import Register from '../pages/register/Register'
 import AccountPage from '../pages/account_page/AccountPage'
 import { useSelector } from 'react-redux'
+import RootReducerState from '../models/root_reducer'
+
+interface ChildrenProps {
+    children: ReactElement
+}
 
 const Routers = () => {
-    const currentUser = useSelector((state) => state.AuthReducer.currentUser)
-    const RequireAuth = ({ children }) => {
+    const currentUser = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
+    const RequireAuth = ({ children }: ChildrenProps) => {
         console.log('RequireAuth::', currentUser)
         return currentUser ? children : <Navigate to="/login" />
     }

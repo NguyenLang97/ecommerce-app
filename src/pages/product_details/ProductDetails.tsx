@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Helmet from '../../components/helmet/Helmet'
 import CommonSection from '../../components/ui/common-section/CommonSection'
-import { Button, Row, Col } from 'antd'
+import { Button, Row, Col, message } from 'antd'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../../store/cart/cart.action'
@@ -16,6 +16,7 @@ import { doc, setDoc, addDoc, collection, serverTimestamp, onSnapshot, getDoc } 
 import { db } from '../../firebase/firebase_config'
 import Comment from './comment/Comment'
 import RootReducerState from '../../models/root_reducer'
+import AddCartItemState from '../../models/add_cartItem'
 
 const ProductDetails = () => {
     const [allProducts, setAllProducts] = useState<any[]>([])
@@ -60,18 +61,43 @@ const ProductDetails = () => {
     }, [allProducts])
 
     const relatedProduct = allProducts.filter((item) => product.category === item.category)
+    console.log('sl', product)
 
     const addProduct = () => {
         if (product) {
-            const { title, price, category, description, img } = product
-            dispatch(
-                addItem({
-                    id,
-                    title,
-                    price,
-                    img,
-                })
-            )
+            const { id, title, price, category, description, img, total } = product
+            if (product.total > 0) {
+                console.log('tang')
+
+                if (cartItems.length) {
+                    const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
+                    console.log('sl', cartItems)
+
+                    if (Number(product.total) > quantity) {
+                        console.log('dat hang')
+
+                        dispatch(
+                            addItem({
+                                id,
+                                title,
+                                price,
+                                img,
+                            })
+                        )
+                    } else {
+                        message.error('Rất tiếc đã hết hàng')
+                    }
+                } else {
+                    dispatch(
+                        addItem({
+                            id,
+                            title,
+                            price,
+                            img,
+                        })
+                    )
+                }
+            }
         }
     }
 
@@ -118,9 +144,7 @@ const ProductDetails = () => {
                                             Quantity: <span>{product.total}</span>
                                         </p>
 
-                                        <Button onClick={addProduct} className="w-100 btn btn-group-item" style={{ backgroundColor: '#3555c5' }}>
-                                            Add to Cart
-                                        </Button>
+                                        <Button onClick={() => addProduct()}>Add to Cart</Button>
                                     </Col>
                                 </Row>
                             </Col>

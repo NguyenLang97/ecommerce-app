@@ -1,12 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteItem, removeItem, addItem } from '../../../store/cart/cart.action'
 import RootReducerState from '../../../models/root_reducer'
 import AddCartItemState from '../../../models/add_cartItem'
 import CartItemsState from '../../../models/cart_items'
+import _ from 'lodash'
+import {
+    collection,
+    // getDocs,
+    onSnapshot,
+} from 'firebase/firestore'
 import './cart_table.scss'
+import { db } from '../../../firebase/firebase_config'
+import { message } from 'antd'
 
 const CartTable = () => {
+    const [allProducts, setAllProducts] = useState([])
     const dispatch = useDispatch()
     const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
 
@@ -21,6 +30,26 @@ const CartTable = () => {
         localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
     }, [totalQuantity])
 
+    useEffect(() => {
+        const unsub = onSnapshot(
+            collection(db, 'products'),
+            (snapShot) => {
+                let list: any = []
+                snapShot.docs.forEach((doc) => {
+                    list.push({ id: doc.id, ...doc.data() })
+                })
+                const cloneList = _.clone(list)
+                setAllProducts(list)
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+        return () => {
+            unsub()
+        }
+    }, [])
+
     const delItem = (id: string) => {
         dispatch(deleteItem(id))
     }
@@ -30,15 +59,27 @@ const CartTable = () => {
         dispatch(removeItem(id))
     }
 
-    const incrementItem = ({ id, title, price, img }: AddCartItemState) => {
-        dispatch(
-            addItem({
-                id,
-                title,
-                price,
-                img,
-            })
-        )
+    const incrementItem = ({ id, title, price, img, quantity }: AddCartItemState) => {
+        if (allProducts) {
+            const productsItem = allProducts.find((item: any) => item.id === id)
+            console.log({ productsItem })
+            console.log(productsItem as any)
+
+            if (Number((productsItem as any).total) > quantity) {
+                console.log('dat hang')
+
+                dispatch(
+                    addItem({
+                        id,
+                        title,
+                        price,
+                        img,
+                    })
+                )
+            } else {
+                message.error('Rất tiếc đã hết hàng')
+            }
+        }
     }
 
     return (
@@ -68,7 +109,10 @@ const CartTable = () => {
                                 <td className="text-center">
                                     {item.quantity}
                                     <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
-                                        <span className="increase__btn" onClick={() => incrementItem({ id: item.id, title: item.title, price: item.price, img: item.img[0].img })}>
+                                        <span
+                                            className="increase__btn"
+                                            onClick={() => incrementItem({ id: item.id, title: item.title, price: item.price, img: item.img[0].img, quantity: item.quantity })}
+                                        >
                                             <i className="ri-add-line"></i>
                                         </span>
                                         <span className="decrease__btn" onClick={() => decreaseItem(item.id)}>

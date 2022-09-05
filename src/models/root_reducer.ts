@@ -4,10 +4,15 @@ export default interface RootReducerState {
         infoUser: {
             username: boolean
             img: string
+            address: string
+            phone: string
+            fullname: string
+            email: string
+            yearofbirth: string
         }
     }
     CartReducer: {
-        totalQuantity: boolean
+        totalQuantity: number
         cartItems: []
         totalAmount: number
     }

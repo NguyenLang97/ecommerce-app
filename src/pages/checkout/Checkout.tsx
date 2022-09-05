@@ -4,24 +4,28 @@ import { Button, Col, message, Row, Tooltip, Input } from 'antd'
 
 import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
-import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { doc, setDoc, addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { db } from '../../firebase/firebase_config'
 
 import './checkout.scss'
 import CartTable from '../cart_page/cartTable/CartTable'
 import SuccessfulTransaction from '../../components/successful_transaction/SuccessfulTransaction'
+import RootReducerState from '../../models/root_reducer'
+import CartItemsState from '../../models/cart_items'
 
 const Checkout = () => {
-    const cartItems = useSelector((state) => state.CartReducer.cartItems)
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
     console.log({ totalQuantity })
-    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
     console.log({ cartItems })
-    const address = useSelector((state) => state.AuthReducer.infoUser.address)
-    const phone = useSelector((state) => state.AuthReducer.infoUser.phone)
-    const fullname = useSelector((state) => state.AuthReducer.infoUser.fullname)
-    const email = useSelector((state) => state.AuthReducer.infoUser.email)
-    const userId = useSelector((state) => state.AuthReducer.currentUser)
+    const address = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.address)
+    const phone = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.phone)
+    const fullname = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.fullname)
+    const email = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.email)
+    const userId = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
+    const cartTotalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
+
     console.log({ userId })
 
     const [enterFullName, setEnterFullName] = useState(fullname)
@@ -30,13 +34,12 @@ const Checkout = () => {
     const [enterAddress, setEnterAddress] = useState(address)
     const [isOrderSuccess, setIsOrderSuccess] = useState(false)
 
-    const cartTotalAmount = useSelector((state) => state.CartReducer.totalAmount)
     const shippingCost = 30
     const Sale = 0
 
     const totalAmountOrder = cartTotalAmount + Number(shippingCost) + Number(Sale)
 
-    const submitHandler = async (e) => {
+    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         // setIsOrderSuccess(true)
         e.preventDefault()
         const userShippingAddress = {
@@ -62,6 +65,17 @@ const Checkout = () => {
             console.log(err)
             // setError(true)
         }
+
+        cartItems.map(async (item: CartItemsState) => {
+            try {
+                await updateDoc(doc(db, 'products', item.id as string), {
+                    total: Number(item.totalStock) - Number(item.quantity),
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        })
+
         setTimeout(() => {
             message.success('Đặt hàng thành công', 2)
             setIsOrderSuccess(true)
@@ -70,7 +84,7 @@ const Checkout = () => {
     console.log({ isOrderSuccess })
 
     return (
-        <>
+        <div className="container">
             {isOrderSuccess ? (
                 <SuccessfulTransaction />
             ) : (
@@ -150,7 +164,7 @@ const Checkout = () => {
                     </Row>
                 </Helmet>
             )}
-        </>
+        </div>
     )
 }
 

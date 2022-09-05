@@ -7,6 +7,7 @@ import 'antd/dist/antd.css'
 import { useParams } from 'react-router-dom'
 import defaultAvt from '../../../assets/images/default-avt.png'
 import RootReducerState from '../../../models/root_reducer'
+import CommentUserState from '../../../models/comment_user'
 
 import './comment.scss'
 
@@ -15,6 +16,8 @@ const Comment = () => {
     console.log({ id })
     const [reviewMsg, setReviewMsg] = useState('')
     const [data, setData] = useState<any>()
+    const [ractingValue, setRactingValue] = useState(0)
+
     const currentUser = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
     const username = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.username)
     const img = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.img) || defaultAvt
@@ -75,20 +78,20 @@ const Comment = () => {
         return date.toLocaleDateString('en-US')
     }
     console.log({ data })
-    const [ractingValue, setRactingValue] = useState(0)
+
     // console.log({ ractingValue })
 
     // //Tong so tat ca binh luan
     const rateTotals = data?.commentUser.length
 
     // // tim user danh gia sao >0
-    const positiveStar = data?.commentUser.filter((star) => star.userRacting > 0)
-    const numberStart = (number: number) => data?.commentUser.filter((star) => star.userRacting === number).length
+    const positiveStar = data?.commentUser.filter((star: any) => star.userRacting > 0)
+    const numberStart = (number: number) => data?.commentUser.filter((star: CommentUserState) => star.userRacting === number).length
     console.log('1', numberStart(1))
     // const towStar = data?.commentUser.filter((star) => (star.userRacting = 2))
 
     //từ tù
-    const starAvg = positiveStar?.reduce((totalStar, star) => totalStar + star.userRacting, 0) / positiveStar?.length
+    const starAvg = positiveStar?.reduce((totalStar: number, star: CommentUserState) => totalStar + star.userRacting, 0) / positiveStar?.length
     // console.log('1', typeof Math.floor(starAvg) == 'number' && Math.floor(starAvg) > 0)
 
     const rates = [1, 2, 3, 4, 5]
@@ -153,7 +156,7 @@ const Comment = () => {
                 </div>
                 <div className="comment__review w-100 p-4">
                     {data?.commentUser !== undefined ? (
-                        data?.commentUser.map((item, index) => (
+                        data?.commentUser.map((item: CommentUserState, index: number) => (
                             <div key={index} className="d-flex flex-column">
                                 <div className="comment__user-wrap d-flex">
                                     <div className="comment__user review d-flex">

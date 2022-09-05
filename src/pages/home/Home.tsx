@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import Helmet from '../../components/helmet/Helmet'
-import { Container, Col, Row } from 'antd'
+import { Col, Row } from 'antd'
 
 // import Category from '../../components/ui/category/Category'
 import _ from 'lodash'
@@ -17,17 +17,14 @@ import {
     onSnapshot,
 } from 'firebase/firestore'
 import { db } from '../../firebase/firebase_config'
-import foodCategoryImg01 from '../../assets/images/hamburger.png'
-import foodCategoryImg02 from '../../assets/images/pizza.png'
-import foodCategoryImg03 from '../../assets/images/bread.png'
-import laptopImg from '../../assets/products/laptop_32px.png'
 import mobileImg from '../../assets/products/mobile_32px.png'
 import mouseImg from '../../assets/products/mouse_32px.png'
+import laptopImg from '../../assets/products/laptop_32px.png'
 
 import ProductCard from '../../components/ui/product-card/ProductCard'
 import SaleOff from '../../components/sale_off/SaleOff'
 import FamousBrand from '../../components/famous_brand/FamousBrand'
-// import DiscountList from '../../components/DiscountList/index'
+import RootReducerState from '../../models/root_reducer'
 
 const Home = () => {
     const [category, setCategory] = useState('ALL')
@@ -36,12 +33,12 @@ const Home = () => {
     const [loading, setLoading] = useState(true)
     const [hotProduct, setHotProduct] = useState([])
 
-    const currentUser = useSelector((state) => state.AuthReducer.currentUser)
-    const infoUser = useSelector((state) => state.AuthReducer.infoUser)
+    const currentUser = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
+    const infoUser = useSelector((state: RootReducerState) => state.AuthReducer.infoUser)
 
-    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
-    const cartItems = useSelector((state) => state.CartReducer.cartItems)
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems))
         localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
@@ -57,7 +54,7 @@ const Home = () => {
         const unsub = onSnapshot(
             collection(db, 'products'),
             (snapShot) => {
-                let list = []
+                let list: any = []
                 snapShot.docs.forEach((doc) => {
                     list.push({ id: doc.id, ...doc.data() })
                 })
@@ -65,7 +62,7 @@ const Home = () => {
                 setFilter(cloneList)
                 setAllProducts(list)
 
-                const filteredPizza = list.filter((item) => item.category === 'Điện thoại')
+                const filteredPizza = list.filter((item: any) => item.category === 'Điện thoại')
                 const slicePizza = filteredPizza.slice(0, 4)
                 setHotProduct(slicePizza)
                 setLoading(false)
@@ -79,8 +76,8 @@ const Home = () => {
         }
     }, [])
     // console.log('allProducts:', allProducts)
-    const filterProduct = (category) => {
-        const updateProduct = allProducts.filter((item) => item.category === category)
+    const filterProduct = (category: string) => {
+        const updateProduct = allProducts.filter((item: any) => item.category === category)
         setFilter(updateProduct)
     }
 
@@ -164,7 +161,7 @@ const Home = () => {
                             </div>
                         </Col>
                         <Row className="w-100 bg-white bor-rad-8 mt-5 p-3">
-                            {filter.map((item) => (
+                            {filter.map((item: any) => (
                                 <Col span={24} sm={12} lg={8} xl={6} key={item.id} className="w-100">
                                     <ProductCard item={item} />
                                 </Col>
@@ -192,7 +189,7 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row className="w-100 bg-white bor-rad-8 mt-5 p-3">
-                        {hotProduct.map((item) => (
+                        {hotProduct.map((item: any) => (
                             <Col span={24} sm={12} lg={8} xl={6} key={item.id}>
                                 <ProductCard item={item} />
                             </Col>

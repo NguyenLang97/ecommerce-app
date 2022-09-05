@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 
 import './product-card.scss'
 
@@ -25,15 +25,39 @@ const ProductCard = (props: ProductCardState) => {
         localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
         localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
     }, [totalQuantity])
+    console.log({ cartItems })
+
     const addToCart = () => {
-        dispatch(
-            addItem({
-                id,
-                title,
-                img,
-                price,
-            })
-        )
+        if (total > 0) {
+            if (cartItems.length) {
+                const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
+                console.log({ quantity })
+
+                if (total > quantity) {
+                    dispatch(
+                        addItem({
+                            id,
+                            title,
+                            img,
+                            price,
+                        })
+                    )
+                } else {
+                    message.error('Rất tiếc đã hết hàng')
+                }
+            } else {
+                dispatch(
+                    addItem({
+                        id,
+                        title,
+                        img,
+                        price,
+                    })
+                )
+            }
+        } else {
+            message.error('Rất tiếc đã hết hàng')
+        }
     }
 
     return (

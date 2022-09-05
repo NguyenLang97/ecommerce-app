@@ -4,7 +4,7 @@ import './footer.scss'
 
 const Footer = () => {
     return (
-        <footer className="footer pt-5 pb-4">
+        <footer className="container footer pt-5 pb-4">
             <div className="container text-center text-md-left">
                 <div className="row text-center text-md-left">
                     <div className="footer__main col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
@@ -70,33 +70,30 @@ const Footer = () => {
                         <p className="d-flex align-items-center">
                             {/* <i className="ri-home-2-fill"></i> */}
                             <HomeTwoTone />
-                            <span className='m-l-8'>Số 1 Phố Thái Hà, Phường Trung Liệt, Quận Đống Đa, Hà Nội</span>
+                            <span className="m-l-8">Số 1 Phố Thái Hà, Phường Trung Liệt, Quận Đống Đa, Hà Nội</span>
                         </p>
                         <p className="d-flex align-items-center">
                             <MailTwoTone />
-                            <span className='m-l-8'>ttbstore@gmail.com</span>
+                            <span className="m-l-8">ttbstore@gmail.com</span>
                         </p>
                         <p className="d-flex align-items-center">
                             <PhoneTwoTone />
-                            <span className='m-l-8'>0986856852</span>
+                            <span className="m-l-8">0986856852</span>
                         </p>
                         <p className="d-flex align-items-center">
                             <PrinterTwoTone />
-                            <span className='m-l-8'>0986856852</span>
+                            <span className="m-l-8">0986856852</span>
                         </p>
                     </div>
-                    <hr className="mb-4" />
-                    <div className="row d-flex justify-content-center">
-                        <div>
-                            <p className="copyright__text">
-                                Copyright 2022 All Rights Reserved By :
-                                <a href="#" style={{ textDecoration: 'none' }}>
-                                    <strong className="text-infor">TTB Store</strong>
-                                </a>
-                            </p>
-                        </div>
+                    <div className="justify-content-center ">
+                        <p className="copyright__text bor-top">
+                            Copyright 2022 All Rights Reserved By :
+                            <a href="#" style={{ textDecoration: 'none' }}>
+                                <strong className="text-infor">TTB Store</strong>
+                            </a>
+                        </p>
                     </div>
-                    <div className="social__links row d-flex justify-content-center">
+                    <div className="social__links row d-flex justify-content-center ">
                         <div className="text-center">
                             <ul className="list-unstyled list-inline">
                                 <li className="list-inline-item">

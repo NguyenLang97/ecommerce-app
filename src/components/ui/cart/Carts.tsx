@@ -23,6 +23,9 @@ const Carts = () => {
     const toggleCart = () => {
         dispatch(toggleCartUi(false))
     }
+
+    console.log('cartItem', cartItems)
+
     return (
         <div className="cart__container">
             <div className="cart">
@@ -33,7 +36,7 @@ const Carts = () => {
                 </div>
 
                 <div className="cart__item-list">
-                    {cartItems.length === 0 ? <h6 className="text-center mt-5">No item added to the cart</h6> : cartItems.map((item, index) => <CartItem item ={item}  key={index} />)}
+                    {cartItems.length === 0 ? <h6 className="text-center mt-5">No item added to the cart</h6> : cartItems.map((item: CartItemsState, index) => <CartItem item={item} key={index} />)}
                 </div>
 
                 <div className="cart__bottom d-flex align-items-center justify-content-between">

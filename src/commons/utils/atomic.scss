@@ -72,6 +72,9 @@
 .bor-right {
     border-right: 1px dashed #f00;
 }
+.bor-top {
+    border-top: 1px solid #afafaf;
+}
 
 .item-active {
     border: solid 1px #3a5dd9;
@@ -79,6 +82,7 @@
 }
 
 // padding
+
 .p-4x {
     padding: 4px;
 }
