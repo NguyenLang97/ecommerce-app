@@ -16,9 +16,9 @@ const CartPage = () => {
     return (
         <Helmet title="Cart">
             <CommonSection title="Your Cart" />
-            <section className="cart-page container">
+            <section className="cart-page container bg-white p-5 bor-rad-8">
                 <Row>
-                    <Col lg={24}>
+                    <Col lg={24} md={24} sm={24}>
                         {/* {cartItems.length === 0 ? (
                                 <h5 className="text-center">Your cart is empty</h5>
                             ) : (

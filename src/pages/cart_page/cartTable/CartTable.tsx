@@ -38,7 +38,6 @@ const CartTable = () => {
                 snapShot.docs.forEach((doc) => {
                     list.push({ id: doc.id, ...doc.data() })
                 })
-                const cloneList = _.clone(list)
                 setAllProducts(list)
             },
             (error) => {
@@ -77,17 +76,20 @@ const CartTable = () => {
                     })
                 )
             } else {
-                message.error('Rất tiếc đã hết hàng')
+                message.error({
+                    content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                    duration: 3,
+                })
             }
         }
     }
 
     return (
-        <>
+        <div className="table-responsive">
             {cartItems.length === 0 ? (
                 <h5 className="text-center">Your cart is empty</h5>
             ) : (
-                <table className="table table-bordered table-responsive">
+                <table className="table table-bordered bg-white">
                     <thead>
                         <tr className="text-center">
                             <th>Image</th>
@@ -129,7 +131,7 @@ const CartTable = () => {
                     </tbody>
                 </table>
             )}
-        </>
+        </div>
     )
 }
 

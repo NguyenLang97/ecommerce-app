@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Button, message } from 'antd'
+import { Button, message, Row } from 'antd'
 
 import './product-card.scss'
 
@@ -28,12 +28,12 @@ const ProductCard = (props: ProductCardState) => {
     console.log({ cartItems })
 
     const addToCart = () => {
-        if (total > 0) {
+        if (Number(total) > 0) {
             if (cartItems.length) {
                 const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
                 console.log({ quantity })
 
-                if (total > quantity) {
+                if (Number(total) > quantity) {
                     dispatch(
                         addItem({
                             id,
@@ -43,7 +43,10 @@ const ProductCard = (props: ProductCardState) => {
                         })
                     )
                 } else {
-                    message.error('Rất tiếc đã hết hàng')
+                    message.error({
+                        content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                        duration: 3,
+                    })
                 }
             } else {
                 dispatch(
@@ -56,7 +59,10 @@ const ProductCard = (props: ProductCardState) => {
                 )
             }
         } else {
-            message.error('Rất tiếc đã hết hàng')
+            message.error({
+                content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                duration: 3,
+            })
         }
     }
 

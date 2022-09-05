@@ -1,6 +1,10 @@
 .product-details {
     .product__lits-img {
+        flex: 1;
         .product__main-img {
+            img {
+                width: 50px;
+            }
         }
         .product__images {
             .img__item {

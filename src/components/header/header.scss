@@ -167,7 +167,7 @@
             .nav__wrapper {
                 .nav__logo {
                     img {
-                        width: calc(100% - 10%);
+                        width: calc(100% - 20%);
                     }
                 }
                 .navigation {
@@ -231,7 +231,27 @@
 
                 .nav__logo {
                     img {
-                        // margin-top: -30px !important;
+                        // width: calc(100% - 30%);
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 576px) {
+    .header {
+        &__container {
+            .nav__wrapper {
+                .nav__logo {
+                    img {
+                        width: calc(100% - 30%);
+                    }
+                }
+                .nav__right {
+                    .nav__cart-wrap {
+                        .nav__cart-title {
+                            font-size: 0rem;
+                        }
                     }
                 }
             }

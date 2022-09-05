@@ -66,7 +66,10 @@ const CartItem = (prop: CartsState) => {
                             })
                         )
                     } else {
-                        message.error('Rất tiếc đã hết hàng')
+                        message.error({
+                            content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                            duration: 3,
+                        })
                     }
                 } else {
                     dispatch(

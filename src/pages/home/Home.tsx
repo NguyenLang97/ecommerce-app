@@ -103,7 +103,7 @@ const Home = () => {
         <div className="home">
             <Helmet title="home">
                 {/* Sale off */}
-                <section>
+                <section className="">
                     <SaleOff />
                 </section>
 

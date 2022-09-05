@@ -93,6 +93,10 @@
     padding: 16px;
 }
 
+.p-r-16 {
+    padding-right: 16px;
+}
+
 .pt-2 {
     padding-top: 2px;
 }
@@ -139,6 +143,21 @@
         -webkit-filter: brightness(1.1);
         filter: brightness(1.1);
     }
+}
+
+.ant-message-custom-content {
+    display: flex;
+    align-items: center;
+}
+
+.ant-carousel .slick-dots {
+    margin-left: 0;
+}
+.slick-dots li.slick-active button:before {
+    color: transparent;
+}
+.slick-dots li button:before {
+    color: transparent;
 }
 
 @media only screen and (max-width: 992px) {

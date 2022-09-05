@@ -86,8 +86,8 @@ function AccountPage() {
     return (
         <section className="profile__container container">
             {/* <button onClick={()=>dispatch(logoutStart())}>logout</button> */}
-            <Row className="mt-5">
-                <Col lg={6} className="profile__user text-center ">
+            <Row gutter={[16, 16]} className="mt-5 justify-content-between">
+                <Col xl={6} lg={6} md={24} sm={24} className="profile__user text-center bor-rad-8 ">
                     <img className="w-25 mb-3 rounded-circle" src={img || defaultAvt} alt="" />
                     <h6 className=" mb-3">
                         Tài khoản của : <span>{username}</span>
@@ -107,7 +107,7 @@ function AccountPage() {
                         </li>
                     </ul>
                 </Col>
-                <Col lg={18} className="details__user  bg-white bor-rad-8 p-5">
+                <Col xl={18} lg={18} md={24} sm={24} className="details__user bg-white bor-rad-8 p-4">
                     {renderComponent(activeKey)}
                 </Col>
             </Row>

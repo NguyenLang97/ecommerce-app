@@ -23,7 +23,7 @@ const ProfileUser = () => {
 
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {}
     return (
-        <Col lg="9" className="details__user">
+        <div className="details__user">
             <form className="checkout__form" onSubmit={submitHandler}>
                 <div className="form__group">
                     <label htmlFor="">Tên người nhận</label>
@@ -51,12 +51,12 @@ const ProfileUser = () => {
                 </div>
             </form>
 
-            <Col lg={24} className="update__user__profile">
-                <div>
+            <Col lg={24} className="update__user__profile mt-3">
+                <div className='text-center'>
                     <button>Cập nhật thông tin</button>
                 </div>
             </Col>
-        </Col>
+        </div>
     )
 }
 
