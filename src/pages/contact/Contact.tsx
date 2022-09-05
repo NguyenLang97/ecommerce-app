@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 // import { contactConfig } from './content_option/ContentOption'
@@ -15,7 +15,7 @@ const Contact = () => {
     })
 
     const { name, email, subject, message } = state
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!name || !email || !subject || !message) {
             toast.error('Please provide value in each input field')
@@ -26,7 +26,7 @@ const Contact = () => {
         }
     }
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         let { name, value } = e.target
         setState({ ...state, [name]: value })
     }
@@ -63,13 +63,13 @@ const Contact = () => {
                                                     <div className="col-md-12">
                                                         <div className="form-group">
                                                             <textarea
-                                                                type="text"
+                                                                // type="text"
                                                                 className="form-control"
                                                                 name="message"
                                                                 placeholder="Message"
-                                                                cols="30"
-                                                                rows="6"
-                                                                onChange={handleInputChange}
+                                                                cols={30}
+                                                                rows={6}
+                                                                // onChange={handleInputChange}
                                                                 value={message}
                                                             ></textarea>
                                                         </div>
@@ -86,10 +86,10 @@ const Contact = () => {
                                     <div className="col-md-6 d-flex align-items-stretch">
                                         <div className="info-wrap w-100 p-lg-5 p-4 img">
                                             <h3>Contact us</h3>
-                                            <p className="mb-4">We're open for any suggestion or just to have a chat</p>
+                                            <p className="mb-4">We are open for any suggestion or just to have a chat</p>
                                             <div className="dbox w-100 d-flex align-items-start">
                                                 <div className="icon d-flex align-items-center justify-content-center">
-                                                    <i class="ri-map-pin-2-fill"></i>
+                                                    <i className="ri-map-pin-2-fill"></i>
                                                 </div>
                                                 <div className="text pl-3 d-flex">
                                                     <p>
@@ -99,7 +99,7 @@ const Contact = () => {
                                             </div>
                                             <div className="dbox w-100 d-flex align-items-center">
                                                 <div className="icon d-flex align-items-center justify-content-center">
-                                                    <i class="ri-phone-fill"></i>
+                                                    <i className="ri-phone-fill"></i>
                                                 </div>
                                                 <div className="text pl-3">
                                                     <p>
@@ -110,23 +110,23 @@ const Contact = () => {
                                             </div>
                                             <div className="dbox w-100 d-flex align-items-center">
                                                 <div className="icon d-flex align-items-center justify-content-center">
-                                                    <i class="ri-send-plane-fill"></i>
+                                                    <i className="ri-send-plane-fill"></i>
                                                 </div>
                                                 <div className="text pl-3">
                                                     <p>
                                                         <span>Email:</span>
-                                                        <a href="mailto:info@yoursite.com">info@yoursite.com</a>
+                                                        <a href="mailto:info@yoursite.com">ttbstore@gmail.com</a>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="dbox w-100 d-flex align-items-center">
                                                 <div className="icon d-flex align-items-center justify-content-center">
-                                                    <i class="ri-global-fill"></i>
+                                                    <i className="ri-global-fill"></i>
                                                 </div>
                                                 <div className="text pl-3">
                                                     <p>
                                                         <span>Website:</span>
-                                                        <a href="#">yoursite.com</a>
+                                                        <a href="#">ttbstore.com</a>
                                                     </p>
                                                 </div>
                                             </div>

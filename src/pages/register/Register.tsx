@@ -15,12 +15,12 @@ const Register = () => {
     // const signupEmailRef = useRef()
     // const signupPasswordRef = useRef()
 
-    const [fullname, setFullname] = useState()
-    const [username, setUsername] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [fullname, setFullname] = useState('')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const submitHandler = (e) => {
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         // const fullname = signupFullNameRef.current.value
         // const email = signupEmailRef.current.value
@@ -123,7 +123,7 @@ const Register = () => {
 
                                         <div className="form-check d-flex justify-content-center mb-5">
                                             <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                                            <label className="form-check-label" for="form2Example3g">
+                                            <label className="form-check-label" htmlFor="form2Example3g">
                                                 I agree all statements in{' '}
                                                 <a href="#!" className="text-body">
                                                     <u>Terms of service</u>

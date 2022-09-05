@@ -5,11 +5,12 @@ import { useSelector } from 'react-redux'
 import { Row, Col, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import CartTable from './cartTable/CartTable'
+import RootReducerState from '../../models/root_reducer'
 
 const CartPage = () => {
-    const cartItems = useSelector((state) => state.CartReducer.cartItems)
-    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
     console.log({ totalQuantity })
 
     return (
@@ -79,7 +80,7 @@ const CartPage = () => {
 //             <td className="text-center">${price}</td>
 //             <td className="text-center">{quantity}px</td>
 //             <td className="text-center cart__item-del">
-//                 <i class="ri-delete-bin-line" onClick={deleteItem}></i>
+//                 <i className="ri-delete-bin-line" onClick={deleteItem}></i>
 //             </td>
 //         </tr>
 //     )

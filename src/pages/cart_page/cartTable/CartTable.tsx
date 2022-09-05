@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteItem, removeItem, addItem } from '../../../store/cart/cart.action'
 import RootReducerState from '../../../models/root_reducer'
+import AddCartItemState from '../../../models/add_cartItem'
+import CartItemsState from '../../../models/cart_items'
 import './cart_table.scss'
 
 const CartTable = () => {
@@ -28,7 +30,7 @@ const CartTable = () => {
         dispatch(removeItem(id))
     }
 
-    const incrementItem = ({ id, title, price, img }) => {
+    const incrementItem = ({ id, title, price, img }: AddCartItemState) => {
         dispatch(
             addItem({
                 id,
@@ -56,7 +58,7 @@ const CartTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cartItems.map((item) => (
+                        {cartItems.map((item: CartItemsState) => (
                             <tr key={item.id}>
                                 <td className="text-center cart__img-box">
                                     <img src={item.img[0].img} alt="" />

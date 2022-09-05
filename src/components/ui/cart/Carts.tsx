@@ -5,14 +5,16 @@ import CartItem from './cart_item/CartItem'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleCartUi } from '../../../store/cart_ui/cart_ui.action'
+import RootReducerState from '../../../models/root_reducer'
+import CartItemsState from '../../../models/cart_items'
 
 import './cart.scss'
 
 const Carts = () => {
     const dispatch = useDispatch()
-    const cartItems = useSelector((state) => state.CartReducer.cartItems)
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
-    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems))
         localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
@@ -26,12 +28,12 @@ const Carts = () => {
             <div className="cart">
                 <div className="cart__close">
                     <span onClick={toggleCart}>
-                        <CloseCircleOutlined className='cart__close-icon'/>
+                        <CloseCircleOutlined className="cart__close-icon" />
                     </span>
                 </div>
 
                 <div className="cart__item-list">
-                    {cartItems.length === 0 ? <h6 className="text-center mt-5">No item added to the cart</h6> : cartItems.map((item, index) => <CartItem item={item} key={index} />)}
+                    {cartItems.length === 0 ? <h6 className="text-center mt-5">No item added to the cart</h6> : cartItems.map((item, index) => <CartItem item ={item}  key={index} />)}
                 </div>
 
                 <div className="cart__bottom d-flex align-items-center justify-content-between">

@@ -18,16 +18,16 @@ import './all_products.scss'
 import '../../styles/pagination.scss'
 
 const AllProducts = () => {
-    const [searchTerm, setSearchTerm] = useState('')
+    const [searchTerm, setSearchTerm] = useState<any>('')
 
     const [pageNumber, setPageNumber] = useState(0)
-    const [allProducts, setAllProducts] = useState([])
+    const [allProducts, setAllProducts] = useState<any[]>([])
 
     useEffect(() => {
         const unsub = onSnapshot(
             collection(db, 'products'),
             (snapShot) => {
-                let list = []
+                let list: any = []
                 snapShot.docs.forEach((doc) => {
                     list.push({ id: doc.id, ...doc.data() })
                 })
@@ -61,7 +61,7 @@ const AllProducts = () => {
 
     const pageCount = Math.ceil(searchedProduct.length / productPerPage)
 
-    const changePage = ({ selected }) => {
+    const changePage = ({ selected }: any) => {
         setPageNumber(selected)
     }
 
