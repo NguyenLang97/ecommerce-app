@@ -6,7 +6,7 @@ import CommonSection from '../../components/ui/common-section/CommonSection'
 import { Button, Row, Col } from 'antd'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addItem } from '../../../src/store/cart/cart.action'
+import { addItem } from '../../store/cart/cart.action'
 
 import './product_details.scss'
 import ProductCard from '../../components/ui/product-card/ProductCard'
