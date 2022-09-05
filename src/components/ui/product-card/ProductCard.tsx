@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Button, Col, Image, InputNumber, message, Rate, Row } from 'antd'
+import { Button } from 'antd'
 
 import './product-card.scss'
 
@@ -7,11 +7,16 @@ import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../../../store/cart/cart.action'
+import RootReducerState from '../../../models/root_reducer'
 
-const ProductCard = (props) => {
-    const cartItems = useSelector((state) => state.CartReducer.cartItems)
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
-    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
+interface ProductCardState {
+    item: { id: string; title: string; img: [{ img: string }]; price: number; total: number }
+}
+
+const ProductCard = (props: ProductCardState) => {
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
 
     const { id, title, img, price, total } = props.item
     const dispatch = useDispatch()

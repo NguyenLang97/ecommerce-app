@@ -6,8 +6,9 @@ import './cart-item.scss'
 import { useDispatch } from 'react-redux'
 import { addItem, removeItem, deleteItem } from '../../../../store/cart/cart.action'
 import { List } from 'antd'
+import CartItemsState from '../../../../models/cart_items'
 
-const CartItem = ({ item }) => {
+const CartItem = ( item : CartItemsState) => {
     const { id, title, price, img, quantity, totalPrice } = item
     console.log(item)
 

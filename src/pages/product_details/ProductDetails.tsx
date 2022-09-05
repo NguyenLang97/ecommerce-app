@@ -6,7 +6,7 @@ import CommonSection from '../../components/ui/common-section/CommonSection'
 import { Button, Row, Col } from 'antd'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addItem } from '../../../src/store/cart/cart.action'
+import { addItem } from '../../store/cart/cart.action'
 
 import './product_details.scss'
 import ProductCard from '../../components/ui/product-card/ProductCard'
@@ -15,16 +15,17 @@ import Policy from './Policy/Policy'
 import { doc, setDoc, addDoc, collection, serverTimestamp, onSnapshot, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase/firebase_config'
 import Comment from './comment/Comment'
+import RootReducerState from '../../models/root_reducer'
 
 const ProductDetails = () => {
-    const [allProducts, setAllProducts] = useState([])
+    const [allProducts, setAllProducts] = useState<any[]>([])
     const [previewImg, setPreviewImg] = useState()
-    const cartItems = useSelector((state) => state.CartReducer.cartItems)
-    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
-    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
-    const currentUser = useSelector((state) => state.AuthReducer.currentUser)
-    const username = useSelector((state) => state.AuthReducer.infoUser?.username)
-    const img = useSelector((state) => state.AuthReducer.infoUser?.img)
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
+    const currentUser = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
+    const username = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.username)
+    const img = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.img)
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems))
@@ -40,7 +41,7 @@ const ProductDetails = () => {
         const unsub = onSnapshot(
             collection(db, 'products'),
             (snapShot) => {
-                let list = []
+                let list: any[] = []
                 snapShot.docs.forEach((doc, index) => {
                     list.push({ id: doc.id, ...doc.data() })
                 })
@@ -96,7 +97,7 @@ const ProductDetails = () => {
                                             <img src={previewImg || product.img[0].img} alt="" className="w-100 bor-rad-8" />
                                         </Row>
                                         <Row className="product__images d-flex flex-row mt-4">
-                                            {product.img.map((item, index) => (
+                                            {product.img.map((item: any, index: number) => (
                                                 <div key={index} className=" mb-3" onClick={() => setPreviewImg(item.img)}>
                                                     <img src={item.img} alt="" className="img__item" />
                                                 </div>

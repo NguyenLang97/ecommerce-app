@@ -2,7 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './common-section.scss'
 
-const CommonSection = (props) => {
+interface CommonSectionState {
+    title: string
+}
+
+const CommonSection = (props: CommonSectionState) => {
     return (
         <section className="common__section container">
             <Link to="/">
