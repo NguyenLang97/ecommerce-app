@@ -48,39 +48,43 @@ const CartItem = (prop: CartsState) => {
         if (product) {
             const { id, title, price, category, description, img, total } = product
             if (product.total > 0) {
-                console.log('tang')
+                // console.log('tang')
 
-                if (cartItems.length) {
-                    const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
-                    console.log('sl', cartItems)
+                // if (cartItems.length) {
+                //     const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
+                //     console.log('sl', cartItems)
 
-                    if (Number(product.total) > quantity) {
-                        console.log('dat hang')
+                //     if (Number(product.total) > quantity) {
+                //         console.log('dat hang')
 
-                        dispatch(
-                            addItem({
-                                id,
-                                title,
-                                price,
-                                img,
-                            })
-                        )
-                    } else {
-                        message.error({
-                            content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
-                            duration: 3,
-                        })
-                    }
-                } else {
-                    dispatch(
-                        addItem({
-                            id,
-                            title,
-                            price,
-                            img,
-                        })
-                    )
-                }
+                dispatch(
+                    addItem({
+                        id,
+                        title,
+                        price,
+                        img,
+                        total,
+                    })
+                )
+                // } else {
+                //     message.error({
+                //         content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                //         duration: 3,
+                //     })
+                // }
+            } else {
+                // dispatch(
+                //     addItem({
+                //         id,
+                //         title,
+                //         price,
+                //         img,
+                //     })
+                // )
+                message.error({
+                    content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                    duration: 3,
+                })
             }
         }
     }

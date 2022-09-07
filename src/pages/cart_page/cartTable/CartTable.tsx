@@ -58,30 +58,31 @@ const CartTable = () => {
         dispatch(removeItem(id))
     }
 
-    const incrementItem = ({ id, title, price, img, quantity }: AddCartItemState) => {
-        if (allProducts) {
-            const productsItem = allProducts.find((item: any) => item.id === id)
-            console.log({ productsItem })
-            console.log(productsItem as any)
+    const incrementItem = ({ id, title, price, img, quantity, total }: AddCartItemState) => {
+        if (Number(total) > 0) {
+            // const productsItem = allProducts.find((item: any) => item.id === id)
+            // console.log({ productsItem })
+            // console.log(productsItem as any)
 
-            if (Number((productsItem as any).total) > quantity) {
-                console.log('dat hang')
+            // if (Number((productsItem as any).total) > quantity) {
+            //     console.log('dat hang')
 
-                dispatch(
-                    addItem({
-                        id,
-                        title,
-                        price,
-                        img,
-                    })
-                )
-            } else {
-                message.error({
-                    content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
-                    duration: 3,
+            dispatch(
+                addItem({
+                    id,
+                    title,
+                    price,
+                    img,
+                    total,
                 })
-            }
+            )
+        } else {
+            message.error({
+                content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                duration: 3,
+            })
         }
+        // }
     }
 
     return (
@@ -113,7 +114,7 @@ const CartTable = () => {
                                     <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
                                         <span
                                             className="increase__btn"
-                                            onClick={() => incrementItem({ id: item.id, title: item.title, price: item.price, img: item.img[0].img, quantity: item.quantity })}
+                                            onClick={() => incrementItem({ id: item.id, title: item.title, price: item.price, img: item.img[0].img, quantity: item.quantity, total: item.total })}
                                         >
                                             <i className="ri-add-line"></i>
                                         </span>

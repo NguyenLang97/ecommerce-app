@@ -4,4 +4,5 @@ export default interface AddCartItemState {
     price: number
     img: string
     quantity: number
+    total: number
 }

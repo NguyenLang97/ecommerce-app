@@ -23,6 +23,7 @@ const CartReducer = (state = initialState, action) => {
                     price: newItem.price,
                     quantity: 1,
                     totalPrice: newItem.price,
+                    total: newItem.total,
                 })
             } else {
                 if (Number(newItem.total) > existingItem.quantity) {

@@ -7,4 +7,5 @@ export default interface CartItemsState {
     img: [{ img: string }]
     totalAmountOrder: number
     totalStock: number
+    total: number
 }

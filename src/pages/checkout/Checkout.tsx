@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Col, message, Row, Tooltip, Input } from 'antd'
 
 import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
-import { doc, setDoc, addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { doc, setDoc, addDoc, collection, serverTimestamp, updateDoc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase/firebase_config'
 
 import './checkout.scss'
@@ -33,6 +33,8 @@ const Checkout = () => {
     const [enterPhone, setEnterPhone] = useState(phone)
     const [enterAddress, setEnterAddress] = useState(address)
     const [isOrderSuccess, setIsOrderSuccess] = useState(false)
+    const [total, setTotal] = useState()
+    const [data, setData] = useState<any[]>([])
 
     const shippingCost = 30
     const Sale = 0
@@ -51,7 +53,7 @@ const Checkout = () => {
             cartItems,
             totalQuantity,
             totalAmountOrder,
-            status: 'Order Success'
+            status: 'Đặt hàng thành công',
         }
 
         console.log({ userShippingAddress })
@@ -70,10 +72,10 @@ const Checkout = () => {
         cartItems.map(async (item: CartItemsState) => {
             try {
                 await updateDoc(doc(db, 'products', item.id as string), {
-                    total: Number(item.totalStock) - Number(item.quantity),
+                    total: Number(item.total) - Number(item.quantity),
                 })
             } catch (err) {
-                console.log(err)
+                message.error('Vui lòng xem lại số lượng trên hệ thống', 2)
             }
         })
 
@@ -83,6 +85,7 @@ const Checkout = () => {
         }, 1000)
     }
     console.log({ isOrderSuccess })
+    console.log('total', data)
 
     return (
         <div className="container">

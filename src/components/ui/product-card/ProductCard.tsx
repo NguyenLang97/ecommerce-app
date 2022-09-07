@@ -32,7 +32,7 @@ const ProductCard = (props: ProductCardState) => {
             // console.log({ total })
             // if (cartItems.length) {
             //     const quantity = (cartItems.find((item: any) => item.id === id) as any).quantity
-                
+
             //     if (Number(total) > quantity) {
             //         dispatch(
             //             addItem({
@@ -44,7 +44,7 @@ const ProductCard = (props: ProductCardState) => {
             //         )
             //     } else {
             //         console.log('10');
-                    
+
             //         message.error({
             //             content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
             //             duration: 3,
@@ -56,7 +56,7 @@ const ProductCard = (props: ProductCardState) => {
                     title,
                     img,
                     price,
-                    total
+                    total,
                 })
             )
             // } else {
