@@ -92,7 +92,7 @@ const OrderList = () => {
                                 </td>
                                 <td>30</td>
                                 <td>{item.totalAmountOrder}</td>
-                                <td>Đặt hàng thành công</td>
+                                <td>{item.status}</td>
                             </tr>
                         ))}
                     {/* <tr>

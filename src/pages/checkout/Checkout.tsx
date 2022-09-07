@@ -51,6 +51,7 @@ const Checkout = () => {
             cartItems,
             totalQuantity,
             totalAmountOrder,
+            status: 'Order Success'
         }
 
         console.log({ userShippingAddress })

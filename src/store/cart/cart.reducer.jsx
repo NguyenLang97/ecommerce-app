@@ -1,4 +1,5 @@
 import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM } from './cart.action'
+import { Button, message, Row } from 'antd'
 
 const initialState = {
     cartItems: JSON.parse(localStorage.getItem('cart')) || [],
@@ -11,9 +12,10 @@ const CartReducer = (state = initialState, action) => {
         case ADD_ITEM: {
             const newItem = action.payload
             const existingItem = state.cartItems.find((item) => item.id === newItem.id)
-            state.totalQuantity++
 
             if (!existingItem) {
+                state.totalQuantity++
+
                 state.cartItems.push({
                     id: newItem.id,
                     title: newItem.title,
@@ -23,9 +25,18 @@ const CartReducer = (state = initialState, action) => {
                     totalPrice: newItem.price,
                 })
             } else {
-                existingItem.quantity++
-                existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItem.price)
-                console.log({ existingItem })
+                if (Number(newItem.total) > existingItem.quantity) {
+                    state.totalQuantity++
+
+                    existingItem.quantity++
+                    existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItem.price)
+                    console.log({ existingItem })
+                } else {
+                    message.error({
+                        content: 'Rất tiếc sản phẩm đã hết hàng, Vui lòng liên hệ chúng tôi',
+                        duration: 3,
+                    })
+                }
             }
 
             state.totalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
