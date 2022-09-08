@@ -81,17 +81,17 @@ const ProductCard = (props: ProductCardState) => {
         <div className="product__item">
             <div className="product__item-img">
                 <Link to={`/products/${id}`}>
-                    <img src={img[0].img} alt="product-img" className="w-50" />
+                    <img style={{ width: 80, height: 80 }} src={img[0].img} alt="product-img" className="" />
                 </Link>
             </div>
 
             <div className="product__item-content">
-                <h5>
+                <h5 className="text-overflow-2 h-48">
                     <Link to={`/products/${id}`}>{title}</Link>
                 </h5>
                 <div className="product__item-info d-flex flex-column align-items-center justify-content-between ">
                     <span className="product__item-price">${price}</span>
-                    <span className="product__item-total">Remain: {total}</span>
+                    <span className="product__item-total">Số lượng: {total}</span>
 
                     <Button onClick={addToCart} size="large" className="w-100 btn btn-group-item" style={{ backgroundColor: '#3555c5' }}>
                         THÊM GIỎ HÀNG

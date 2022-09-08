@@ -1,16 +1,25 @@
+@import '../../commons/variables/color.scss';
 .product-details {
     .product__lits-img {
         flex: 1;
         .product__main-img {
-            img {
-                width: 50px;
-            }
         }
         .product__images {
-            .img__item {
-                cursor: pointer;
-                width: 40px;
-                height: auto;
+            .product__image-item {
+                &:hover,
+                &:active,
+                &.active {
+                    border: solid 1px $color-secondary;
+                    border-radius: 8px;
+                }
+                .img__item {
+                    cursor: pointer;
+                    width: 40px;
+                    height: auto;
+                }
+            }
+            .product__specification {
+                border-top: 1px dashed #3555c5;
             }
         }
     }
@@ -20,9 +29,10 @@
             align-items: center;
             column-gap: 1rem;
             margin-bottom: 0;
-
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: $color-secondary;
             span {
-                font-size: 2rem;
             }
         }
         .category {

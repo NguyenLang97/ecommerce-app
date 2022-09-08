@@ -98,11 +98,11 @@ const Comment = () => {
     return (
         <div className="comment p-12">
             <div className=" d-flex align-items-center gap-5 py-3">
-                <h6 className="rev">Review</h6>
+                <h3 className="rev">Nhận xét của khách hàng</h3>
             </div>
             {/* đánh giá tổng quan */}
             <Col span={24} className="p-16">
-                <h2 className="font-size-28px">Đánh giá</h2>
+                <h3 className="font-size-28px">Đánh giá</h3>
                 <div className="overview d-flex p-tb-16">
                     {/* tổng kết */}
                     <div className="d-flex flex-column align-items-center bor-right">
