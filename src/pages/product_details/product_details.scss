@@ -18,9 +18,9 @@
                     height: auto;
                 }
             }
-            .product__specification {
-                border-top: 1px dashed #3555c5;
-            }
+        }
+        .product__specification {
+            border-top: 1px dashed #3555c5;
         }
     }
     .product-details__content {
@@ -44,7 +44,6 @@
             margin-top: 10px;
             span {
                 padding: 5px 10px;
-                background: #fde4e4;
                 color: #212245;
                 border-radius: 5px;
             }

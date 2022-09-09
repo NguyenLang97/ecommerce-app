@@ -4,7 +4,7 @@ import { Button, Col, Input, message, Pagination, Progress, Rate, Row } from 'an
 import { db } from '../../../firebase/firebase_config'
 import { useDispatch, useSelector } from 'react-redux'
 import 'antd/dist/antd.css'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import defaultAvt from '../../../assets/images/default-avt.png'
 import RootReducerState from '../../../models/root_reducer'
 import CommentUserState from '../../../models/comment_user'
@@ -95,6 +95,9 @@ const Comment = () => {
     // console.log('1', typeof Math.floor(starAvg) == 'number' && Math.floor(starAvg) > 0)
 
     const rates = [1, 2, 3, 4, 5]
+
+    const isAuth = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
+
     return (
         <div className="comment p-12">
             <div className=" d-flex align-items-center gap-5 py-3">
@@ -129,51 +132,56 @@ const Comment = () => {
                     </div>
                 </div>
             </Col>
-
-            <form className="comment__form-group d-flex flex-wrap flex-row  mt-4" onSubmit={commentHandler}>
-                <div className="comment__form-container w-100 p-4 d-flex flex-row ">
-                    <div className="comment__form">
-                        <textarea
-                            rows={5}
-                            // type="text"
-                            value={reviewMsg}
-                            placeholder="Xin mời để lại câu hỏi, TTB Store sẽ trả lời lại trong 1h, các câu hỏi sau 22h - 8h sẽ được trả lời vào sáng hôm sau"
-                            onChange={(e) => setReviewMsg(e.target.value)}
-                            required
+            {isAuth ? (
+                <Link to={'/login'}>
+                    <h3 className="text-center mt-5 t-color-secondary">Đăng nhập để nhận xét</h3>
+                </Link>
+            ) : (
+                <form className="comment__form-group d-flex flex-wrap flex-row  mt-4" onSubmit={commentHandler}>
+                    <div className="comment__form-container w-100 p-4 d-flex flex-row ">
+                        <div className="comment__form">
+                            <textarea
+                                rows={5}
+                                // type="text"
+                                value={reviewMsg}
+                                placeholder="Xin mời để lại câu hỏi, TTB Store sẽ trả lời lại trong 1h, các câu hỏi sau 22h - 8h sẽ được trả lời vào sáng hôm sau"
+                                onChange={(e) => setReviewMsg(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <Rate
+                            onChange={(value) => {
+                                setRactingValue(value)
+                            }}
+                            value={ractingValue}
+                            className="d-flex m-1"
                         />
+                        <button type="submit" className="btn btn-primary btn_comment">
+                            <i className="ri-send-plane-fill"></i>
+                            Gửi
+                        </button>
                     </div>
-                    <Rate
-                        onChange={(value) => {
-                            setRactingValue(value)
-                        }}
-                        value={ractingValue}
-                        className="d-flex m-1"
-                    />
-                    <button type="submit" className="btn btn-primary btn_comment">
-                        <i className="ri-send-plane-fill"></i>
-                        Gửi
-                    </button>
-                </div>
-                <div className="comment__review w-100 p-4">
-                    {data?.commentUser !== undefined ? (
-                        data?.commentUser.map((item: CommentUserState, index: number) => (
-                            <div key={index} className="d-flex flex-column">
-                                <div className="comment__user-wrap d-flex">
-                                    <div className="comment__user review d-flex">
-                                        <img src={item.imgUser} className="comment__user-img rounded-circle" />
-                                        <p className="comment__user-name m-l-8 m-b-4">{item.nameUser}</p>
-                                        <p className="comment__feedback-date m-b-4">{setDate(item.date.seconds)}</p>
+                    <div className="comment__review w-100 p-4">
+                        {data?.commentUser !== undefined ? (
+                            data?.commentUser.map((item: CommentUserState, index: number) => (
+                                <div key={index} className="d-flex flex-column">
+                                    <div className="comment__user-wrap d-flex">
+                                        <div className="comment__user review d-flex">
+                                            <img src={item.imgUser} className="comment__user-img rounded-circle" />
+                                            <p className="comment__user-name m-l-8 m-b-4">{item.nameUser}</p>
+                                            <p className="comment__feedback-date m-b-4">{setDate(item.date.seconds)}</p>
+                                        </div>
                                     </div>
+                                    <Rate style={{ fontSize: 14 }} value={item.userRacting} disabled className="d-flex m-l-32 m-b-8" />
+                                    <p className="comment__feedback-text p-4x">{item.commentTitle}</p>
                                 </div>
-                                <Rate style={{ fontSize: 14 }} value={item.userRacting} disabled className="d-flex m-l-32 m-b-8" />
-                                <p className="comment__feedback-text p-4x">{item.commentTitle}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <>Chưa có câu hỏi, nhận xết nào</>
-                    )}
-                </div>
-            </form>
+                            ))
+                        ) : (
+                            <>Chưa có câu hỏi, nhận xết nào</>
+                        )}
+                    </div>
+                </form>
+            )}
         </div>
     )
 }

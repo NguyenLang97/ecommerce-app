@@ -17,6 +17,7 @@ import { db } from '../../firebase/firebase_config'
 import Comment from './comment/Comment'
 import RootReducerState from '../../models/root_reducer'
 import AddCartItemState from '../../models/add_cartItem'
+import ConvertCategory from '../../components/ConvertCategory/ConvertCategory'
 
 const ProductDetails = () => {
     const [allProducts, setAllProducts] = useState<any[]>([])
@@ -128,17 +129,17 @@ const ProductDetails = () => {
                                                     <img style={{ maxWidth: 80, maxHeight: 80 }} src={item.img} alt="" className="img__item bor-rad-8 outlined" />
                                                 </div>
                                             ))}
-                                            <p className="product__specification ">
-                                                Specification: <pre className="white-space-wrap">{product.specification}</pre>
-                                            </p>
                                         </Row>
+                                        <p className="product__specification ">
+                                            Specification: <pre className="white-space-wrap">{product.specification}</pre>
+                                        </p>
                                     </Col>
 
                                     <Col span={24} lg={16} md={16} sm={24} className="product-details__content p-lr-16">
                                         <h3 className="product__title mb-3">{product.title}</h3>
 
                                         <p className="category mb-5">
-                                            Category: <span>{product.category}</span>
+                                            Category: <span>{ConvertCategory(product.category)}</span>
                                         </p>
                                         <p className="category mb-5">
                                             Quantity: <span>{product.total}</span>

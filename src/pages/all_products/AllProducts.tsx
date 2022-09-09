@@ -4,7 +4,7 @@ import CommonSection from '../../components/ui/common-section/CommonSection'
 
 import { Row, Col, Menu } from 'antd'
 import 'antd/dist/antd.css'
-import { AppstoreOutlined, LaptopOutlined, MailOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons'
+import Icon, { AppstoreOutlined, GoldOutlined, LaptopOutlined, MailOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons'
 import {
     collection,
     // getDocs,
@@ -30,12 +30,14 @@ import keyboardIcon from '../../assets/products/keyboard_32px.png'
 
 import './all_products.scss'
 import '../../styles/pagination.scss'
+import SubMenu from 'antd/lib/menu/SubMenu'
+import _ from 'lodash'
 
 const AllProducts = () => {
     const [searchTerm, setSearchTerm] = useState<any>('')
-
     const [pageNumber, setPageNumber] = useState(0)
     const [allProducts, setAllProducts] = useState<any[]>([])
+    const [filter, setFilter] = useState(allProducts)
 
     useEffect(() => {
         const unsub = onSnapshot(
@@ -45,6 +47,8 @@ const AllProducts = () => {
                 snapShot.docs.forEach((doc) => {
                     list.push({ id: doc.id, ...doc.data() })
                 })
+                const cloneList = _.clone(list)
+                setFilter(cloneList)
                 setAllProducts(list)
 
                 // setLoading(false)
@@ -58,7 +62,7 @@ const AllProducts = () => {
         }
     }, [])
 
-    const searchedProduct = allProducts.filter((item) => {
+    const searchedProduct = filter.filter((item) => {
         if (searchTerm.value === '') {
             return item
         }
@@ -69,6 +73,7 @@ const AllProducts = () => {
         }
     })
 
+    // Phân trang
     const productPerPage = 8
     const visitedPage = pageNumber * productPerPage
     const displayPage = searchedProduct.slice(visitedPage, visitedPage + productPerPage)
@@ -80,222 +85,253 @@ const AllProducts = () => {
     }
 
     // Menu
-
     const items = [
+        {
+            label: 'ALL',
+            key: 'ALL',
+            icon: <GoldOutlined />,
+        },
         {
             label: 'Laptop',
             key: 'laptop',
             icon: <img src={laptopIcon} alt="" />,
 
-            children: [
-                {
-                    label: 'Dell',
-                    key: 'laptop&Dell',
-                },
-                {
-                    label: 'MSI',
-                    key: 'laptop&MSI',
-                },
-                {
-                    label: 'HP',
-                    key: 'laptop&HP',
-                },
-                {
-                    label: 'Acer',
-                    key: 'laptop&Acer',
-                },
-                {
-                    label: 'ASUS',
-                    key: 'laptop&ASUS',
-                },
-                {
-                    label: 'Lenovo',
-                    key: 'laptop&Lenovo',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'Dell',
+            //         key: 'laptop&Dell',
+            //     },
+            //     {
+            //         label: 'MSI',
+            //         key: 'laptop&MSI',
+            //     },
+            //     {
+            //         label: 'HP',
+            //         key: 'laptop&HP',
+            //     },
+            //     {
+            //         label: 'Acer',
+            //         key: 'laptop&Acer',
+            //     },
+            //     {
+            //         label: 'ASUS',
+            //         key: 'laptop&ASUS',
+            //     },
+            //     {
+            //         label: 'Lenovo',
+            //         key: 'laptop&Lenovo',
+            //     },
+            // ],
         },
         {
             label: 'Điện thoại',
             key: 'phone',
             icon: <img src={mobileIcon} alt="" />,
-            children: [
-                {
-                    label: 'Iphone',
-                    key: 'phone&Iphone',
-                },
-                {
-                    label: 'Samsung',
-                    key: 'phone&Samsung',
-                },
-                {
-                    label: 'OPPO',
-                    key: 'phone&OPPO',
-                },
-                {
-                    label: 'Realme',
-                    key: 'phone&Realme',
-                },
-                {
-                    label: 'Xiaomi',
-                    key: 'phone&Xiaomi',
-                },
-                {
-                    label: 'Nokia',
-                    key: 'phone&Nokia',
-                },
-                {
-                    label: 'Vivo',
-                    key: 'phone&Vivo',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'Iphone',
+            //         key: 'phone&Iphone',
+            //     },
+            //     {
+            //         label: 'Samsung',
+            //         key: 'phone&Samsung',
+            //     },
+            //     {
+            //         label: 'OPPO',
+            //         key: 'phone&OPPO',
+            //     },
+            //     {
+            //         label: 'Realme',
+            //         key: 'phone&Realme',
+            //     },
+            //     {
+            //         label: 'Xiaomi',
+            //         key: 'phone&Xiaomi',
+            //     },
+            //     {
+            //         label: 'Nokia',
+            //         key: 'phone&Nokia',
+            //     },
+            //     {
+            //         label: 'Vivo',
+            //         key: 'phone&Vivo',
+            //     },
+            // ],
         },
         {
             label: 'Camera',
             key: 'camera',
             icon: <img src={cameraIcon} alt="" />,
-            children: [
-                {
-                    label: 'Canon',
-                    key: 'camera&Canon',
-                },
-                {
-                    label: 'Sony',
-                    key: 'camera&Sony',
-                },
-                {
-                    label: 'Fujifilm',
-                    key: 'camera&Fujifilm',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'Canon',
+            //         key: 'camera&Canon',
+            //     },
+            //     {
+            //         label: 'Sony',
+            //         key: 'camera&Sony',
+            //     },
+            //     {
+            //         label: 'Fujifilm',
+            //         key: 'camera&Fujifilm',
+            //     },
+            // ],
         },
         {
             label: 'Cart màn hình',
             key: 'displaycard',
             icon: <img src={displayIcon} alt="" />,
 
-            children: [
-                {
-                    label: 'GIGABYTE',
-                    key: 'displaycard&GIGABYTE',
-                },
-                {
-                    label: 'MSI',
-                    key: 'displaycard&MSI',
-                },
-                {
-                    label: 'NVIDIA',
-                    key: 'displaycard&NVIDIA',
-                },
-                {
-                    label: 'GALAX',
-                    key: 'displaycard&GALAX',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'GIGABYTE',
+            //         key: 'displaycard&GIGABYTE',
+            //     },
+            //     {
+            //         label: 'MSI',
+            //         key: 'displaycard&MSI',
+            //     },
+            //     {
+            //         label: 'NVIDIA',
+            //         key: 'displaycard&NVIDIA',
+            //     },
+            //     {
+            //         label: 'GALAX',
+            //         key: 'displaycard&GALAX',
+            //     },
+            // ],
         },
         {
             label: 'Màn hình',
             key: 'screen',
             icon: <img src={hdtvIcon} alt="" />,
-            children: [
-                {
-                    label: 'SAMSUNG',
-                    key: 'screen&SAMSUNG',
-                },
-                {
-                    label: 'MSI',
-                    key: 'screen&MSI',
-                },
-                {
-                    label: 'LG',
-                    key: 'screen&LG',
-                },
+            // children: [
+            //     {
+            //         label: 'SAMSUNG',
+            //         key: 'screen&SAMSUNG',
+            //     },
+            //     {
+            //         label: 'MSI',
+            //         key: 'screen&MSI',
+            //     },
+            //     {
+            //         label: 'LG',
+            //         key: 'screen&LG',
+            //     },
 
-                {
-                    label: 'Acer',
-                    key: 'screen&Acer',
-                },
-            ],
+            //     {
+            //         label: 'Acer',
+            //         key: 'screen&Acer',
+            //     },
+            // ],
         },
         {
             label: 'Bàn phím',
             key: 'keyboard',
             icon: <img src={keyboardIcon} alt="" />,
-            children: [
-                {
-                    label: 'NEWMEN',
-                    key: 'keyboard&LOGITECH',
-                },
-                {
-                    label: 'LOGITECH',
-                    key: 'keyboard&CORSAIR',
-                },
-                {
-                    label: 'CORSAIR',
-                    key: 'keyboard&RAZER',
-                },
-                {
-                    label: 'RAZER',
-                    key: 'keyboard&ASUS',
-                },
-                {
-                    label: 'AKKO',
-                    key: 'keyboard&AKKO',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'NEWMEN',
+            //         key: 'keyboard&LOGITECH',
+            //     },
+            //     {
+            //         label: 'LOGITECH',
+            //         key: 'keyboard&CORSAIR',
+            //     },
+            //     {
+            //         label: 'CORSAIR',
+            //         key: 'keyboard&RAZER',
+            //     },
+            //     {
+            //         label: 'RAZER',
+            //         key: 'keyboard&ASUS',
+            //     },
+            //     {
+            //         label: 'AKKO',
+            //         key: 'keyboard&AKKO',
+            //     },
+            // ],
         },
         {
             label: 'Chuột',
             key: 'mouse',
             icon: <img src={mouseIcon} alt="" />,
-            children: [
-                {
-                    label: 'NEWMEN',
-                    key: 'mouse&NEWMEN',
-                },
-                {
-                    label: 'LOGITECH',
-                    key: 'mouse&LOGITECH',
-                },
-                {
-                    label: 'CORSAIR',
-                    key: 'mouse&CORSAIR',
-                },
-                {
-                    label: 'RAZER',
-                    key: 'mouse&RAZER',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'NEWMEN',
+            //         key: 'mouse&NEWMEN',
+            //     },
+            //     {
+            //         label: 'LOGITECH',
+            //         key: 'mouse&LOGITECH',
+            //     },
+            //     {
+            //         label: 'CORSAIR',
+            //         key: 'mouse&CORSAIR',
+            //     },
+            //     {
+            //         label: 'RAZER',
+            //         key: 'mouse&RAZER',
+            //     },
+            // ],
         },
         {
-            label: 'Hard Drive',
+            label: 'Ổ cứng',
             key: 'harddrive',
             icon: <img src={ssdIcon} alt="" />,
-            children: [
-                {
-                    label: 'SAMSUNG',
-                    key: 'harddrive&NEWMEN',
-                },
-                {
-                    label: 'GIGABYTE',
-                    key: 'harddrive&LOGITECH',
-                },
-                {
-                    label: 'KINGSTON',
-                    key: 'harddrive&CORSAIR',
-                },
-                {
-                    label: 'LACIE',
-                    key: 'harddrive&RAZER',
-                },
-            ],
+            // children: [
+            //     {
+            //         label: 'SAMSUNG',
+            //         key: 'harddrive&NEWMEN',
+            //     },
+            //     {
+            //         label: 'GIGABYTE',
+            //         key: 'harddrive&LOGITECH',
+            //     },
+            //     {
+            //         label: 'KINGSTON',
+            //         key: 'harddrive&CORSAIR',
+            //     },
+            //     {
+            //         label: 'LACIE',
+            //         key: 'harddrive&RAZER',
+            //     },
+            // ],
         },
     ]
+    const filterProduct = (category: string) => {
+        const updateProduct = allProducts.filter((item: any) => item.category === category)
+        setFilter(updateProduct)
+    }
 
-    const [current, setCurrent] = useState('laptop')
+    const [current, setCurrent] = useState('ALL')
 
     const onClick = (e: any) => {
-        console.log('click ', e.keyPath)
-        setCurrent(e.key)
+        console.log('click ', e.key)
+        if (e.key === 'ALL') {
+            setFilter(allProducts)
+            setCurrent(e.key)
+        }
+        if (e.key !== 'ALL') {
+            setCurrent(e.key)
+            filterProduct(e.key)
+        }
+    }
+    console.log('filter', filter)
+
+    const handleChangeFilter = (e: any) => {
+        if (e.target.value === 'highprice') {
+            const highprice = allProducts.sort((a, b) => b.price - a.price)
+            console.log(highprice)
+
+            setFilter(highprice)
+        }
+        if (e.target.value === 'lowprice') {
+            const highprice = allProducts.sort((a, b) => a.price - b.price)
+            console.log(highprice)
+
+            setFilter(highprice)
+        }
     }
 
     return (
@@ -315,17 +351,46 @@ const AllProducts = () => {
 
                     <Col span={24} xl={12} lg={12} sm={12} className="mb-5">
                         <div className="sorting__widget text-end">
-                            <select className="w-50">
-                                <option>Default</option>
-                                <option value="ascending">Alphabetically, A-Z</option>
-                                <option value="descending">Alphabetically, Z-A</option>
-                                <option value="high-price">High Price</option>
-                                <option value="low-price">Low Price</option>
+                            <select className="w-50" onChange={handleChangeFilter}>
+                                <option>Bộ lọc</option>
+                                <option value="bestrating">Đánh giá tốt nhất</option>
+                                <option value="bestseller">Bán chạy nhất</option>
+                                <option value="bestpromotion">Khuyến mãi tốt nhất</option>
+                                <option value="highprice">Giá giảm dần</option>
+                                <option value="lowprice">Giá tăng dần</option>
                             </select>
                         </div>
                     </Col>
                 </Row>
+
                 <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+
+                <div className="lst-quickfilter q-manu m-3">
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/iPad-(Apple)522-b_4.jpg" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/logo-iphone-220x48.png" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/samsungnew-220x48-1.png" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/OPPO42-b_5.jpg" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/vivo-logo-220-220x48-3.png" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/Realme42-b_37.png" width="30" className="no-text" />
+                    </div>
+                    <div className="box-quicklink__item bd-radius quicklink-logo">
+                        <img src="//cdn.tgdd.vn/Brand/1/Mobell42-b_19.jpg" width="30" className="no-text" />
+                    </div>
+                </div>
 
                 <Row gutter={16} className="w-100">
                     {displayPage.map((item) => (
@@ -334,7 +399,8 @@ const AllProducts = () => {
                         </Col>
                     ))}
                 </Row>
-                <Row>
+
+                <Row >
                     <Col span={24}>
                         <ReactPaginate pageCount={pageCount} onPageChange={changePage} previousLabel={'Prev'} nextLabel={'Next'} containerClassName=" paginationBttns " />
                     </Col>

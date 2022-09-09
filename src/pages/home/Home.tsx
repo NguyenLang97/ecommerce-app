@@ -25,9 +25,11 @@ import ProductCard from '../../components/ui/product-card/ProductCard'
 import SaleOff from '../../components/sale_off/SaleOff'
 import FamousBrand from '../../components/famous_brand/FamousBrand'
 import RootReducerState from '../../models/root_reducer'
+import ReactPaginate from 'react-paginate'
 
 const Home = () => {
     const [category, setCategory] = useState('ALL')
+    const [pageNumber, setPageNumber] = useState(0)
     const [allProducts, setAllProducts] = useState([])
     const [filter, setFilter] = useState(allProducts)
     const [loading, setLoading] = useState(true)
@@ -62,7 +64,7 @@ const Home = () => {
                 setFilter(cloneList)
                 setAllProducts(list)
 
-                const filteredPizza = list.filter((item: any) => item.category === 'Điện thoại')
+                const filteredPizza = list.filter((item: any) => item.category === 'phone')
                 const slicePizza = filteredPizza.slice(0, 4)
                 setHotProduct(slicePizza)
                 setLoading(false)
@@ -81,21 +83,32 @@ const Home = () => {
         setFilter(updateProduct)
     }
 
+    // Phân trang
+    const productPerPage = 8
+    const visitedPage = pageNumber * productPerPage
+    const displayPage = filter.slice(visitedPage, visitedPage + productPerPage)
+
+    const pageCount = Math.ceil(filter.length / productPerPage)
+
+    const changePage = ({ selected }: any) => {
+        setPageNumber(selected)
+    }
+
     useEffect(() => {
         if (category === 'ALL') {
             setFilter(allProducts)
         }
 
-        if (category === 'Laptop') {
-            filterProduct('Laptop')
+        if (category === 'laptop') {
+            filterProduct('laptop')
         }
 
-        if (category === 'Mouse') {
-            filterProduct('Mouse')
+        if (category === 'mouse') {
+            filterProduct('mouse')
         }
 
-        if (category === 'Điện thoại') {
-            filterProduct('Điện thoại')
+        if (category === 'phone') {
+            filterProduct('phone')
         }
     }, [category])
 
@@ -128,7 +141,7 @@ const Home = () => {
                 </section>
 
                 <section className="home__category-wrap container">
-                    <Row>
+                    <Row className="w-100 bg-white bor-rad-8 mt-5 p-3">
                         <Col span={24} className="text-center">
                             <h2>Sản phẩm phổ biến</h2>
                         </Col>
@@ -141,19 +154,19 @@ const Home = () => {
                                     </button>
                                 </Col>
                                 <Col sm={6} md={6} lg={6} xl={6}>
-                                    <button className={`d-flex align-items-center ${category === 'Laptop' ? 'home__category-btn--active' : ''} `} onClick={() => setCategory('Laptop')}>
+                                    <button className={`d-flex align-items-center ${category === 'laptop' ? 'home__category-btn--active' : ''} `} onClick={() => setCategory('laptop')}>
                                         <img src={laptopImg} alt="" />
                                         Laptop
                                     </button>
                                 </Col>
                                 <Col sm={6} md={6} lg={6} xl={6}>
-                                    <button className={`d-flex align-items-center ${category === 'Điện thoại' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('Điện thoại')}>
+                                    <button className={`d-flex align-items-center ${category === 'phone' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('phone')}>
                                         <img src={mobileImg} alt="" />
                                         Điện thoại
                                     </button>
                                 </Col>
                                 <Col sm={6} md={6} lg={6} xl={6}>
-                                    <button className={`d-flex align-items-center ${category === 'Mouse' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('Mouse')}>
+                                    <button className={`d-flex align-items-center ${category === 'mouse' ? ' home__category-btn--active' : ''} `} onClick={() => setCategory('mouse')}>
                                         <img src={mouseImg} alt="" />
                                         Chuột
                                     </button>
@@ -161,11 +174,16 @@ const Home = () => {
                             </div>
                         </Col>
                         <Row className="w-100 bg-white bor-rad-8 mt-5 p-3">
-                            {filter.map((item: any) => (
+                            {displayPage.map((item: any) => (
                                 <Col span={24} sm={12} lg={8} xl={6} key={item.id} className="w-100">
                                     <ProductCard item={item} />
                                 </Col>
                             ))}
+                        </Row>
+                        <Row className='w-100'>
+                            <Col span={24}>
+                                <ReactPaginate pageCount={pageCount} onPageChange={changePage} previousLabel={'Prev'} nextLabel={'Next'} containerClassName=" paginationBttns " />
+                            </Col>
                         </Row>
                     </Row>
                 </section>

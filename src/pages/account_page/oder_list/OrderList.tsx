@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import RootReducerState from '../../../models/root_reducer'
 import CartItemsState from '../../../models/cart_items'
 import './oder_list.scss'
+import ConvertStOrder from '../../../components/ConvertStOrder/ConvertStOrder'
 
 const OrderList = () => {
     const currentUser = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
@@ -92,7 +93,7 @@ const OrderList = () => {
                                 </td>
                                 <td>30</td>
                                 <td>{item.totalAmountOrder}</td>
-                                <td>{item.status}</td>
+                                <td>{ConvertStOrder(item.status)}</td>
                             </tr>
                         ))}
                     {/* <tr>

@@ -12,6 +12,7 @@ import CartTable from '../cart_page/cartTable/CartTable'
 import SuccessfulTransaction from '../../components/successful_transaction/SuccessfulTransaction'
 import RootReducerState from '../../models/root_reducer'
 import CartItemsState from '../../models/cart_items'
+import { Link } from 'react-router-dom'
 
 const Checkout = () => {
     const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
@@ -25,6 +26,7 @@ const Checkout = () => {
     const email = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.email)
     const userId = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
     const cartTotalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
+    const isAuth = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
 
     console.log({ userId })
 
@@ -89,7 +91,11 @@ const Checkout = () => {
 
     return (
         <div className="container">
-            {isOrderSuccess ? (
+            {isAuth ? (
+                <Link to={'/login'}>
+                    <h3 className="text-center mt-5 t-color-secondary">Đăng nhập để thanh toán</h3>
+                </Link>
+            ) : isOrderSuccess ? (
                 <SuccessfulTransaction />
             ) : (
                 <Helmet title="Checkout">
